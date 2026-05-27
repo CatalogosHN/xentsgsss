@@ -308,25 +308,21 @@
       font-size:42px;
       box-shadow:0 20px 60px rgba(56,189,248,.13);
     }
-
-    .fallback{
+    .safeNotice{
       position:absolute;
       left:16px;
       right:16px;
       bottom:16px;
-      display:flex;
-      gap:10px;
-      justify-content:center;
-      pointer-events:none;
-    }
-
-    .fallback .btn{
-      pointer-events:auto;
-      width:auto;
-      color:#fff;
-      background:rgba(7,17,31,.82);
+      display:none;
+      text-align:center;
+      padding:14px 16px;
+      border-radius:18px;
+      background:rgba(7,17,31,.88);
       border:1px solid rgba(255,255,255,.22);
+      color:#fff;
       box-shadow:0 10px 30px rgba(0,0,0,.25);
+      font-weight:800;
+      line-height:1.35;
     }
 
     footer{
@@ -344,8 +340,7 @@
       .copy{padding:13px}
       .info{grid-template-columns:1fr}
       .map{height:calc(100vh - 310px);min-height:470px}
-      .fallback{bottom:12px}
-      .fallback .btn{width:100%}
+      .safeNotice{bottom:12px}
     }
   </style>
 </head>
@@ -421,9 +416,7 @@
         </div>
       </div>
       <iframe id="trackingFrame" title="Seguimiento de entrega" referrerpolicy="no-referrer"></iframe>
-      <div class="fallback">
-        <a class="btn" id="openExternal" href="#" target="_blank" rel="noopener noreferrer">Abrir seguimiento en pestaña</a>
-      </div>
+      <div class="safeNotice" id="safeNotice">El seguimiento está protegido. Si no carga aquí, el proveedor no permite mostrarlo dentro de una página externa.</div>
     </section>
 
     <footer>© International Items · Seguimiento privado de entrega</footer>
@@ -448,7 +441,7 @@
     const clientCode = document.getElementById('clientCode');
     const trackingFrame = document.getElementById('trackingFrame');
     const loadingBox = document.getElementById('loadingBox');
-    const openExternal = document.getElementById('openExternal');
+    const safeNotice = document.getElementById('safeNotice');
 
     function showError(msg){
       errorBox.textContent = msg;
@@ -590,16 +583,15 @@
 
         clientOrder.textContent = data.n || 'Entrega en ruta';
         clientCode.textContent = 'Código de seguimiento: ' + (data.c || 'International Items');
-        openExternal.href = data.u;
 
         trackingFrame.onload = () => {
           loadingBox.style.display = 'none';
         };
 
         trackingFrame.src = data.u;
-
         setTimeout(() => {
           loadingBox.style.display = 'none';
+          safeNotice.style.display = 'block';
         }, 3500);
       }catch(e){
         adminPage.style.display = 'grid';
