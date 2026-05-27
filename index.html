@@ -18,6 +18,7 @@
       --blue:#38bdf8;
       --yellow:#facc15;
       --red:#fb7185;
+      --dark:#0b1220;
       --shadow:0 28px 80px rgba(0,0,0,.36);
       --radius:28px;
     }
@@ -36,21 +37,16 @@
       padding:18px;
     }
 
-    .center{
-      min-height:calc(100vh - 36px);
-      display:grid;
-      place-items:center;
-    }
+    .center{min-height:calc(100vh - 36px);display:grid;place-items:center}
+    .wrap{width:min(1080px,100%)}
 
-    .wrap{width:min(880px,100%)}
-
-    .box{
+    .box,.clientCard{
       border:1px solid var(--line);
       background:linear-gradient(180deg,var(--card2),var(--card));
       border-radius:var(--radius);
       box-shadow:var(--shadow);
       backdrop-filter:blur(18px);
-      padding:26px;
+      padding:24px;
       overflow:hidden;
     }
 
@@ -67,285 +63,108 @@
     }
 
     .logo{
-      width:34px;
-      height:34px;
-      border-radius:50%;
-      display:grid;
-      place-items:center;
+      width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
       background:linear-gradient(135deg,var(--green),var(--blue));
       box-shadow:0 0 22px rgba(34,197,94,.35);
     }
 
-    h1{
-      margin:0 0 10px;
-      font-size:clamp(29px,5vw,48px);
-      line-height:1.04;
-      letter-spacing:-1px;
-    }
-
-    .sub{
-      margin:0 0 22px;
-      color:var(--muted);
-      line-height:1.5;
-      max-width:700px;
-    }
-
+    h1{margin:0 0 10px;font-size:clamp(28px,5vw,48px);line-height:1.04;letter-spacing:-1px}
+    .sub{margin:0 0 20px;color:var(--muted);line-height:1.5;max-width:760px}
     .grid{display:grid;gap:14px}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
 
-    .row{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
+    label{display:block;font-size:13px;text-transform:uppercase;letter-spacing:.55px;color:rgba(255,255,255,.82);font-weight:900;margin-bottom:8px}
+
+    input,textarea,select{
+      width:100%;border:1px solid var(--line);background:rgba(0,0,0,.18);color:#fff;
+      border-radius:18px;padding:14px 15px;font-size:16px;outline:none;font-family:inherit;
     }
-
-    label{
-      display:block;
-      font-size:13px;
-      text-transform:uppercase;
-      letter-spacing:.55px;
-      color:rgba(255,255,255,.82);
-      font-weight:900;
-      margin-bottom:8px;
-    }
-
-    input,textarea{
-      width:100%;
-      border:1px solid var(--line);
-      background:rgba(0,0,0,.18);
-      color:#fff;
-      border-radius:18px;
-      padding:14px 15px;
-      font-size:16px;
-      outline:none;
-      font-family:inherit;
-    }
-
-    textarea{resize:vertical;min-height:104px}
+    textarea{resize:vertical;min-height:86px}
     input::placeholder,textarea::placeholder{color:rgba(255,255,255,.38)}
+    option{color:#111;background:#fff}
 
     .btn{
-      border:0;
-      cursor:pointer;
-      border-radius:18px;
-      padding:15px 16px;
-      font-size:16px;
-      font-weight:1000;
-      color:#06120a;
-      background:linear-gradient(135deg,var(--green),#86efac);
-      box-shadow:0 14px 32px rgba(34,197,94,.22);
-      width:100%;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      text-decoration:none;
+      border:0;cursor:pointer;border-radius:18px;padding:15px 16px;font-size:16px;font-weight:1000;
+      color:#06120a;background:linear-gradient(135deg,var(--green),#86efac);
+      box-shadow:0 14px 32px rgba(34,197,94,.22);width:100%;display:inline-flex;
+      align-items:center;justify-content:center;gap:8px;text-decoration:none;
     }
-
     .btn:hover{filter:brightness(1.05)}
+    .btn2{color:#fff;background:rgba(255,255,255,.13);border:1px solid var(--line);box-shadow:none}
+    .btnRed{color:#fff;background:rgba(251,113,133,.16);border:1px solid rgba(251,113,133,.3);box-shadow:none}
 
-    .btn2{
-      color:#fff;
-      background:rgba(255,255,255,.13);
-      border:1px solid var(--line);
-      box-shadow:none;
-    }
-
-    .out{
-      display:none;
-      margin-top:18px;
-      border:1px solid rgba(34,197,94,.30);
-      background:rgba(34,197,94,.11);
-      border-radius:22px;
-      padding:16px;
-    }
-
+    .out{display:none;margin-top:18px;border:1px solid rgba(34,197,94,.30);background:rgba(34,197,94,.11);border-radius:22px;padding:16px}
     .out b{display:block;margin-bottom:8px}
-
-    .linkbox{
-      display:flex;
-      gap:10px;
-      margin-top:10px;
-    }
-
+    .linkbox{display:flex;gap:10px;margin-top:10px}
     .linkbox input{font-weight:800;color:#bbf7d0}
+    .copy{border:1px solid var(--line);background:rgba(255,255,255,.13);color:#fff;border-radius:16px;padding:0 16px;font-weight:900;cursor:pointer;white-space:nowrap}
 
-    .copy{
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.13);
-      color:#fff;
-      border-radius:16px;
-      padding:0 16px;
-      font-weight:900;
-      cursor:pointer;
-      white-space:nowrap;
-    }
+    .err,.ok{display:none;margin-top:14px;border-radius:18px;padding:13px 14px;line-height:1.45}
+    .err{border:1px solid rgba(251,113,133,.32);background:rgba(251,113,133,.14);color:#ffe4e6}
+    .ok{border:1px solid rgba(34,197,94,.32);background:rgba(34,197,94,.13);color:#dcfce7}
 
-    .err{
-      display:none;
-      margin-top:14px;
-      border:1px solid rgba(251,113,133,.32);
-      background:rgba(251,113,133,.14);
-      color:#ffe4e6;
-      border-radius:18px;
-      padding:13px 14px;
-      line-height:1.45;
-    }
+    .note{margin-top:15px;color:var(--muted);font-size:13px;line-height:1.45}
+    .mini{font-size:12px;color:rgba(255,255,255,.55);margin-top:14px;text-align:center}
 
-    .note{
-      margin-top:15px;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.45;
-    }
+    .clientPage{display:none;width:min(1120px,100%);min-height:calc(100vh - 36px);margin:0 auto;align-items:center;justify-content:center}
+    .clientCard{width:100%;padding:22px}
+    .clientHead{text-align:center;padding:4px 6px 12px}
+    .clientHead .sub{margin-left:auto;margin-right:auto;margin-bottom:0}
 
-    .mini{
-      font-size:12px;
-      color:rgba(255,255,255,.55);
-      margin-top:14px;
-      text-align:center;
-    }
-
-    .clientPage{
-      display:none;
-      width:min(920px,100%);
-      min-height:calc(100vh - 36px);
-      margin:0 auto;
-      align-items:center;
-      justify-content:center;
-    }
-
-    .clientCard{
-      width:100%;
-      border:1px solid var(--line);
-      background:linear-gradient(180deg,var(--card2),var(--card));
-      border-radius:32px;
-      box-shadow:var(--shadow);
-      backdrop-filter:blur(18px);
-      padding:28px;
-      text-align:center;
-      overflow:hidden;
-      position:relative;
-    }
-
-    .clientCard:before{
-      content:"";
-      position:absolute;
-      inset:auto -80px -120px auto;
-      width:260px;
-      height:260px;
-      border-radius:50%;
-      background:rgba(34,197,94,.16);
-      filter:blur(5px);
-    }
-
-    .truck{
-      width:110px;
-      height:110px;
-      margin:4px auto 18px;
-      border-radius:34px;
-      display:grid;
-      place-items:center;
-      background:rgba(56,189,248,.13);
-      border:1px solid rgba(56,189,248,.28);
-      box-shadow:0 24px 70px rgba(56,189,248,.14);
-      font-size:54px;
-      position:relative;
-      z-index:1;
-    }
-
-    .clientCard h1{position:relative;z-index:1}
-
-    .statusBox{
-      position:relative;
-      z-index:1;
-      margin:20px 0;
-      display:grid;
-      grid-template-columns:1fr auto;
-      gap:12px;
-      text-align:left;
-      align-items:center;
-      padding:16px;
-      border:1px solid var(--line);
-      border-radius:22px;
-      background:rgba(0,0,0,.16);
-    }
-
+    .statusBox{display:grid;grid-template-columns:1fr auto;gap:12px;text-align:left;align-items:center;padding:16px;border:1px solid var(--line);border-radius:22px;background:rgba(0,0,0,.16);margin:12px 0}
     .statusBox b{display:block;margin-bottom:4px;font-size:18px}
-    .statusBox span{color:var(--muted);font-size:14px}
+    .statusBox span{color:var(--muted);font-size:14px;line-height:1.35}
 
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:7px;
-      padding:10px 13px;
-      border-radius:999px;
-      background:rgba(34,197,94,.13);
-      border:1px solid rgba(34,197,94,.32);
-      color:#bbf7d0;
-      font-size:13px;
-      font-weight:900;
-      white-space:nowrap;
-    }
+    .pill{display:inline-flex;align-items:center;gap:7px;padding:10px 13px;border-radius:999px;background:rgba(34,197,94,.13);border:1px solid rgba(34,197,94,.32);color:#bbf7d0;font-size:13px;font-weight:900;white-space:nowrap}
+    .pillYellow{background:rgba(250,204,21,.12);border-color:rgba(250,204,21,.28);color:#fef3c7}
+    .pillBlue{background:rgba(56,189,248,.12);border-color:rgba(56,189,248,.28);color:#bae6fd}
 
-    .steps{
-      position:relative;
-      z-index:1;
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:12px;
-      margin:18px 0;
-      text-align:left;
-    }
+    .dashboard{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;align-items:stretch}
 
-    .step{
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.07);
-      border-radius:20px;
-      padding:14px;
-    }
+    .mapCard{position:relative;min-height:520px;border-radius:28px;overflow:hidden;border:1px solid var(--line);background:#d9e3dc;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+    .fakeMap{position:absolute;inset:0;background:
+      linear-gradient(90deg,rgba(255,255,255,.45) 1px,transparent 1px),
+      linear-gradient(rgba(255,255,255,.45) 1px,transparent 1px),
+      radial-gradient(circle at 25% 20%,rgba(34,197,94,.18),transparent 18%),
+      radial-gradient(circle at 82% 75%,rgba(56,189,248,.18),transparent 22%),
+      #dfe9e2;background-size:52px 52px,52px 52px,auto,auto,auto}
+    .road{position:absolute;inset:0;width:100%;height:100%}
+    .roadPathBase{fill:none;stroke:#ffffff;stroke-width:22;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 4px 5px rgba(0,0,0,.14))}
+    .roadPathLine{fill:none;stroke:#9ca3af;stroke-width:13;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:22 16}
+    .roadPathDone{fill:none;stroke:#22c55e;stroke-width:13;stroke-linecap:round;stroke-linejoin:round;transition:stroke-dashoffset .7s ease}
 
-    .step strong{display:block;margin-bottom:5px}
-    .step span{color:var(--muted);font-size:13px;line-height:1.35}
+    .pinStart,.pinEnd,.moto{position:absolute;transform:translate(-50%,-50%);z-index:5}
+    .pinStart,.pinEnd{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;font-size:22px;box-shadow:0 8px 24px rgba(0,0,0,.28)}
+    .pinStart{background:#0ea5e9}.pinEnd{background:#ef4444}
+    .moto{width:58px;height:58px;border-radius:22px;display:grid;place-items:center;background:#111827;color:#fff;border:4px solid #fff;font-size:29px;box-shadow:0 14px 32px rgba(0,0,0,.35);transition:left .7s ease,top .7s ease,transform .7s ease}
+    .pulse{position:absolute;width:90px;height:90px;border-radius:50%;border:3px solid rgba(34,197,94,.35);animation:pulse 1.7s infinite;z-index:4;transform:translate(-50%,-50%);transition:left .7s ease,top .7s ease}
+    @keyframes pulse{0%{transform:translate(-50%,-50%) scale(.65);opacity:.9}100%{transform:translate(-50%,-50%) scale(1.25);opacity:0}}
 
-    .clientActions{
-      position:relative;
-      z-index:1;
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-      margin-top:18px;
-    }
+    .mapLabel{position:absolute;left:14px;right:14px;top:14px;z-index:6;display:grid;gap:8px}
+    .mapLabel div{display:flex;justify-content:space-between;gap:10px;align-items:center;background:rgba(255,255,255,.88);color:#111827;border-radius:16px;padding:10px 12px;box-shadow:0 8px 24px rgba(0,0,0,.12);font-weight:900;font-size:13px}
+    .mapLabel span{color:#4b5563;font-weight:700;text-align:right}
 
-    .warning{
-      position:relative;
-      z-index:1;
-      margin-top:15px;
-      color:rgba(255,255,255,.78);
-      font-size:13px;
-      line-height:1.45;
-      border:1px solid rgba(250,204,21,.25);
-      background:rgba(250,204,21,.08);
-      border-radius:18px;
-      padding:12px 14px;
-      text-align:left;
-    }
+    .sideCard{border:1px solid var(--line);border-radius:28px;background:rgba(0,0,0,.16);padding:18px;display:flex;flex-direction:column;gap:14px}
+    .bigPercent{font-size:54px;font-weight:1000;letter-spacing:-2px;line-height:.95}
+    .progressBar{height:16px;border-radius:999px;background:rgba(255,255,255,.15);overflow:hidden;border:1px solid var(--line)}
+    .progressFill{height:100%;width:0%;border-radius:999px;background:linear-gradient(90deg,var(--green),var(--blue));transition:width .7s ease}
+    .dataGrid{display:grid;gap:10px}
+    .dataItem{border:1px solid var(--line);background:rgba(255,255,255,.07);border-radius:18px;padding:12px;text-align:left}
+    .dataItem small{display:block;color:var(--muted);font-size:12px;margin-bottom:4px}.dataItem b{font-size:15px}
 
-    footer{
-      text-align:center;
-      color:rgba(255,255,255,.55);
-      font-size:12px;
-      margin-top:14px;
-      position:relative;
-      z-index:1;
-    }
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+    .step{border:1px solid var(--line);background:rgba(255,255,255,.07);border-radius:18px;padding:12px;text-align:left;opacity:.55}
+    .step.active{opacity:1;border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.09)}
+    .step strong{display:block;margin-bottom:5px}.step span{color:var(--muted);font-size:12.5px;line-height:1.35}
 
-    @media(max-width:700px){
-      body{padding:14px}
-      .box,.clientCard{padding:18px}
-      .row,.statusBox,.steps,.clientActions{grid-template-columns:1fr}
-      .linkbox{flex-direction:column}
-      .copy{padding:13px}
-      .truck{width:96px;height:96px;font-size:48px}
+    .warning{margin-top:14px;color:rgba(255,255,255,.78);font-size:13px;line-height:1.45;border:1px solid rgba(250,204,21,.25);background:rgba(250,204,21,.08);border-radius:18px;padding:12px 14px;text-align:left}
+    footer{text-align:center;color:rgba(255,255,255,.55);font-size:12px;margin-top:14px}
+
+    .hidden{display:none!important}
+
+    @media(max-width:850px){
+      body{padding:12px}.box,.clientCard{padding:16px}.row,.row3,.dashboard,.statusBox,.steps{grid-template-columns:1fr}.linkbox{flex-direction:column}.copy{padding:13px}.mapCard{min-height:490px}.bigPercent{font-size:44px}.mapLabel div{display:block}.mapLabel span{display:block;text-align:left;margin-top:3px}.steps{gap:8px}
     }
   </style>
 </head>
@@ -354,33 +173,98 @@
     <main class="wrap">
       <div class="box">
         <div class="brand"><span class="logo">🔐</span> International Items</div>
-        <h1>Generador privado de links de entrega</h1>
-        <p class="sub">Pega el enlace de seguimiento y genera un link limpio con tu dominio para compartir con el cliente.</p>
+        <h1>Panel privado de entregas</h1>
+        <p class="sub">Crea o actualiza una entrega estimada para el cliente. No usa GPS real ni revela la ubicación exacta del repartidor.</p>
 
         <div class="grid">
-          <div>
-            <label for="realUrl">Enlace de seguimiento</label>
-            <textarea id="realUrl" placeholder="https://enlace-de-seguimiento.com/..." autocomplete="off"></textarea>
+          <div class="row">
+            <div>
+              <label for="githubOwner">Usuario / organización GitHub</label>
+              <input id="githubOwner" type="text" placeholder="Ej: CatalogosHN" autocomplete="off" />
+            </div>
+            <div>
+              <label for="githubRepo">Repositorio</label>
+              <input id="githubRepo" type="text" placeholder="Ej: EntregasInternationalItems" autocomplete="off" />
+            </div>
           </div>
 
           <div class="row">
             <div>
-              <label for="orderName">Nombre / pedido opcional</label>
-              <input id="orderName" type="text" placeholder="Ej: Pedido de Juan" autocomplete="off" />
+              <label for="githubBranch">Rama</label>
+              <input id="githubBranch" type="text" placeholder="main" value="main" autocomplete="off" />
             </div>
             <div>
-              <label for="customCode">Código opcional</label>
-              <input id="customCode" type="text" placeholder="Ej: JUAN25" autocomplete="off" />
+              <label for="githubPath">Archivo de datos</label>
+              <input id="githubPath" type="text" placeholder="data/entregas.json" value="data/entregas.json" autocomplete="off" />
             </div>
           </div>
 
-          <button class="btn" id="createBtn">Generar link para cliente</button>
+          <div>
+            <label for="githubToken">Token GitHub solo para guardar cambios</label>
+            <input id="githubToken" type="password" placeholder="Pega tu token aquí solo en tu dispositivo" autocomplete="off" />
+          </div>
+
+          <hr style="width:100%;border:0;border-top:1px solid var(--line);margin:6px 0;">
+
+          <div class="row">
+            <div>
+              <label for="deliveryId">Código de entrega</label>
+              <input id="deliveryId" type="text" placeholder="Ej: RONAL27" autocomplete="off" />
+            </div>
+            <div>
+              <label for="clientName">Cliente / pedido</label>
+              <input id="clientName" type="text" placeholder="Ej: Ronal Flores" autocomplete="off" />
+            </div>
+          </div>
+
+          <div>
+            <label for="destination">Destino para mostrar al cliente</label>
+            <textarea id="destination" placeholder="Ej: Col. Kennedy, cerca del punto indicado por el cliente"></textarea>
+          </div>
+
+          <div class="row3">
+            <div>
+              <label for="startTime">Hora de salida</label>
+              <input id="startTime" type="datetime-local" />
+            </div>
+            <div>
+              <label for="durationMin">Duración estimada en minutos</label>
+              <input id="durationMin" type="number" min="1" value="35" />
+            </div>
+            <div>
+              <label for="manualProgress">Avance manual %</label>
+              <input id="manualProgress" type="number" min="0" max="100" placeholder="Automático" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="status">Estado</label>
+              <select id="status">
+                <option value="preparando">Preparando entrega</option>
+                <option value="ruta" selected>En ruta</option>
+                <option value="cerca">Cerca del destino</option>
+                <option value="atrasado">Con atraso</option>
+                <option value="entregado">Entregado</option>
+              </select>
+            </div>
+            <div>
+              <label for="driverNote">Nota visible opcional</label>
+              <input id="driverNote" type="text" placeholder="Ej: Tráfico moderado, llega pronto" autocomplete="off" />
+            </div>
+          </div>
+
+          <div class="row">
+            <button class="btn" id="saveBtn" type="button">Guardar / actualizar entrega</button>
+            <button class="btn btn2" id="loadBtn" type="button">Cargar entrega existente</button>
+          </div>
         </div>
 
         <div class="err" id="errorBox"></div>
+        <div class="ok" id="okBox"></div>
 
         <div class="out" id="outputBox">
-          <b>Link generado para compartir con el cliente:</b>
+          <b>Link para compartir con el cliente:</b>
           <div class="linkbox">
             <input id="publicLink" readonly />
             <button class="copy" id="copyBtn">Copiar</button>
@@ -391,7 +275,7 @@
           </div>
         </div>
 
-        <p class="note">Versión compatible con GitHub Pages. El cliente recibe una página limpia de International Items y desde ahí puede abrir el seguimiento externo.</p>
+        <p class="note">El cliente verá una simulación estimada de ruta. Puedes modificar hora, duración, estado o avance manual y el cliente verá el cambio al actualizar la página o automáticamente cada cierto tiempo.</p>
         <div class="mini">www.entregas.itemshn.com</div>
       </div>
     </main>
@@ -399,222 +283,368 @@
 
   <section id="clientPage" class="clientPage">
     <main class="clientCard">
-      <div class="brand"><span class="logo">📦</span> International Items</div>
-      <div class="truck">🛵</div>
-      <h1>Seguimiento de Entrega<br>International Items</h1>
-      <p class="sub" style="margin-left:auto;margin-right:auto;">Tu entrega está en proceso. Presiona el botón para consultar el avance del repartidor.</p>
+      <section class="clientHead">
+        <div class="brand"><span class="logo">📦</span> International Items</div>
+        <h1>Seguimiento de Entrega<br>International Items</h1>
+        <p class="sub">Avance estimado de tu entrega. La ubicación mostrada es aproximada para proteger la privacidad del repartidor.</p>
+      </section>
 
       <section class="statusBox">
         <div>
           <b id="clientOrder">Entrega en ruta</b>
           <span id="clientCode">Código de seguimiento</span>
         </div>
-        <div class="pill">● En ruta</div>
+        <div class="pill" id="statusPill">● En ruta</div>
+      </section>
+
+      <section class="dashboard">
+        <div class="mapCard">
+          <div class="fakeMap"></div>
+          <svg class="road" viewBox="0 0 1000 620" preserveAspectRatio="none">
+            <path id="pathBase" class="roadPathBase" d="M95 520 C 175 455, 230 465, 305 395 S 430 255, 535 305 S 680 405, 760 290 S 835 120, 930 95" />
+            <path id="pathLine" class="roadPathLine" d="M95 520 C 175 455, 230 465, 305 395 S 430 255, 535 305 S 680 405, 760 290 S 835 120, 930 95" />
+            <path id="pathDone" class="roadPathDone" d="M95 520 C 175 455, 230 465, 305 395 S 430 255, 535 305 S 680 405, 760 290 S 835 120, 930 95" />
+          </svg>
+          <div class="mapLabel">
+            <div>Salida <span id="originText">Punto de salida International Items</span></div>
+            <div>Destino <span id="destText">Destino del cliente</span></div>
+          </div>
+          <div class="pinStart" id="pinStart">🏪</div>
+          <div class="pinEnd" id="pinEnd">🏁</div>
+          <div class="pulse" id="pulse"></div>
+          <div class="moto" id="moto">🛵</div>
+        </div>
+
+        <aside class="sideCard">
+          <div>
+            <div class="bigPercent" id="percentText">0%</div>
+            <div class="progressBar"><div class="progressFill" id="progressFill"></div></div>
+          </div>
+
+          <div class="dataGrid">
+            <div class="dataItem"><small>Tiempo estimado restante</small><b id="etaText">Calculando...</b></div>
+            <div class="dataItem"><small>Última actualización</small><b id="updatedText">--</b></div>
+            <div class="dataItem"><small>Nota</small><b id="noteText">Entrega en proceso</b></div>
+          </div>
+        </aside>
       </section>
 
       <section class="steps">
-        <div class="step"><strong>✅ Confirmado</strong><span>Tu pedido fue registrado correctamente.</span></div>
-        <div class="step"><strong>🛵 Asignado</strong><span>El repartidor ya tiene el seguimiento activo.</span></div>
-        <div class="step"><strong>📍 En camino</strong><span>Consulta el avance desde el botón de seguimiento.</span></div>
+        <div class="step" id="step1"><strong>✅ Preparado</strong><span>El pedido fue confirmado.</span></div>
+        <div class="step" id="step2"><strong>🛵 En ruta</strong><span>El repartidor inició el recorrido.</span></div>
+        <div class="step" id="step3"><strong>📍 Cerca</strong><span>La entrega se aproxima al destino.</span></div>
+        <div class="step" id="step4"><strong>🏁 Entregado</strong><span>Entrega finalizada.</span></div>
       </section>
 
-      <section class="clientActions">
-        <button class="btn" id="openTrackingBtn" type="button">Abrir seguimiento</button>
-        <button class="btn btn2" id="copyPageBtn" type="button">Copiar esta página</button>
-      </section>
-
-      <div class="warning">Por seguridad y compatibilidad, el seguimiento se abre fuera de esta página cuando el proveedor no permite mostrarlo incrustado.</div>
+      <div class="warning">Este seguimiento es estimado y puede actualizarse por tráfico, clima, distancia o cambios en la ruta.</div>
       <footer>© International Items · Seguimiento privado de entrega</footer>
     </main>
   </section>
 
   <script>
-    const APP_KEY_TEXT = 'InternationalItems-Entregas-GitHub-v1';
+    const ORIGIN_NAME = 'Punto de salida International Items';
+    const ORIGIN_REFERENCE = 'https://maps.app.goo.gl/keYouYa4sRC9dAFW8?g_st=ac';
 
     const adminPage = document.getElementById('adminPage');
     const clientPage = document.getElementById('clientPage');
-    const realUrl = document.getElementById('realUrl');
-    const orderName = document.getElementById('orderName');
-    const customCode = document.getElementById('customCode');
-    const createBtn = document.getElementById('createBtn');
+    const githubOwner = document.getElementById('githubOwner');
+    const githubRepo = document.getElementById('githubRepo');
+    const githubBranch = document.getElementById('githubBranch');
+    const githubPath = document.getElementById('githubPath');
+    const githubToken = document.getElementById('githubToken');
+    const deliveryId = document.getElementById('deliveryId');
+    const clientName = document.getElementById('clientName');
+    const destination = document.getElementById('destination');
+    const startTime = document.getElementById('startTime');
+    const durationMin = document.getElementById('durationMin');
+    const manualProgress = document.getElementById('manualProgress');
+    const status = document.getElementById('status');
+    const driverNote = document.getElementById('driverNote');
+    const saveBtn = document.getElementById('saveBtn');
+    const loadBtn = document.getElementById('loadBtn');
     const errorBox = document.getElementById('errorBox');
+    const okBox = document.getElementById('okBox');
     const outputBox = document.getElementById('outputBox');
     const publicLink = document.getElementById('publicLink');
     const copyBtn = document.getElementById('copyBtn');
     const previewBtn = document.getElementById('previewBtn');
     const whatsBtn = document.getElementById('whatsBtn');
+
     const clientOrder = document.getElementById('clientOrder');
     const clientCode = document.getElementById('clientCode');
-    const openTrackingBtn = document.getElementById('openTrackingBtn');
-    const copyPageBtn = document.getElementById('copyPageBtn');
+    const statusPill = document.getElementById('statusPill');
+    const originText = document.getElementById('originText');
+    const destText = document.getElementById('destText');
+    const percentText = document.getElementById('percentText');
+    const progressFill = document.getElementById('progressFill');
+    const etaText = document.getElementById('etaText');
+    const updatedText = document.getElementById('updatedText');
+    const noteText = document.getElementById('noteText');
+    const pathDone = document.getElementById('pathDone');
+    const pinStart = document.getElementById('pinStart');
+    const pinEnd = document.getElementById('pinEnd');
+    const moto = document.getElementById('moto');
+    const pulse = document.getElementById('pulse');
+    const steps = [document.getElementById('step1'),document.getElementById('step2'),document.getElementById('step3'),document.getElementById('step4')];
 
-    let clientTrackingUrl = '';
+    const routePoints = [
+      {x:9.5,y:83.8},{x:17.5,y:73.5},{x:30.5,y:63.7},{x:42.0,y:45.0},
+      {x:53.5,y:49.2},{x:66.0,y:66.0},{x:76.0,y:46.8},{x:83.5,y:22.5},{x:93.0,y:15.4}
+    ];
 
-    function showError(msg){
-      errorBox.textContent = msg;
-      errorBox.style.display = 'block';
-      outputBox.style.display = 'none';
+    function showError(msg){errorBox.textContent=msg;errorBox.style.display='block';okBox.style.display='none'}
+    function showOk(msg){okBox.textContent=msg;okBox.style.display='block';errorBox.style.display='none'}
+    function clearAlerts(){errorBox.style.display='none';okBox.style.display='none'}
+    function cleanCode(value){return String(value||'').trim().replace(/[^a-zA-Z0-9_-]/g,'').slice(0,50).toUpperCase()}
+    function randomCode(length=6){const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';const arr=new Uint8Array(length);crypto.getRandomValues(arr);let out='';for(const n of arr)out+=chars[n%chars.length];return out}
+    function clamp(n,min,max){return Math.max(min,Math.min(max,n))}
+    function escapeText(v){return String(v||'').replace(/[<>]/g,'')}
+    function nowLocalInput(){const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,16)}
+
+    function saveSettings(){
+      localStorage.setItem('ii_github_owner',githubOwner.value.trim());
+      localStorage.setItem('ii_github_repo',githubRepo.value.trim());
+      localStorage.setItem('ii_github_branch',githubBranch.value.trim()||'main');
+      localStorage.setItem('ii_github_path',githubPath.value.trim()||'data/entregas.json');
+      localStorage.setItem('ii_github_token',githubToken.value.trim());
     }
 
-    function clearError(){
-      errorBox.textContent = '';
-      errorBox.style.display = 'none';
+    function loadSettings(){
+      githubOwner.value=localStorage.getItem('ii_github_owner')||'CatalogosHN';
+      githubRepo.value=localStorage.getItem('ii_github_repo')||'';
+      githubBranch.value=localStorage.getItem('ii_github_branch')||'main';
+      githubPath.value=localStorage.getItem('ii_github_path')||'data/entregas.json';
+      githubToken.value=localStorage.getItem('ii_github_token')||'';
+      startTime.value=nowLocalInput();
+      deliveryId.value=randomCode(6);
     }
 
-    function isValidHttpUrl(value){
-      try{
-        const url = new URL(value);
-        return url.protocol === 'http:' || url.protocol === 'https:';
-      }catch{
-        return false;
+    function githubApiUrl(){
+      const owner=githubOwner.value.trim();
+      const repo=githubRepo.value.trim();
+      const path=(githubPath.value.trim()||'data/entregas.json').replace(/^\/+/, '');
+      return `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/${path}`;
+    }
+
+    function rawDataUrl(){
+      const path=(githubPath.value.trim()||'data/entregas.json').replace(/^\/+/, '');
+      return `${location.origin}/${path}?v=${Date.now()}`;
+    }
+
+    async function fetchJsonDataForAdmin(){
+      const token=githubToken.value.trim();
+      const res=await fetch(githubApiUrl()+`?ref=${encodeURIComponent(githubBranch.value.trim()||'main')}`,{
+        headers:{'Accept':'application/vnd.github+json','Authorization':'Bearer '+token}
+      });
+      if(res.status===404)return {sha:null,data:{deliveries:{}}};
+      if(!res.ok)throw new Error('No pude leer el archivo de datos en GitHub. Revisa owner, repo, ruta, rama o token.');
+      const json=await res.json();
+      const text=decodeURIComponent(escape(atob(json.content.replace(/\n/g,''))));
+      let data;
+      try{data=JSON.parse(text)}catch{data={deliveries:{}}}
+      if(!data.deliveries)data.deliveries={};
+      return {sha:json.sha,data};
+    }
+
+    async function putJsonData(sha,data){
+      const token=githubToken.value.trim();
+      const content=btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2))));
+      const body={message:'Actualizar entregas International Items',content,branch:githubBranch.value.trim()||'main'};
+      if(sha)body.sha=sha;
+      const res=await fetch(githubApiUrl(),{
+        method:'PUT',
+        headers:{'Accept':'application/vnd.github+json','Authorization':'Bearer '+token,'Content-Type':'application/json'},
+        body:JSON.stringify(body)
+      });
+      if(!res.ok){
+        const err=await res.text();
+        throw new Error('No se pudo guardar en GitHub. '+err.slice(0,160));
       }
+      return res.json();
     }
 
-    function cleanCode(value){
-      return String(value || '')
-        .trim()
-        .replace(/[^a-zA-Z0-9_-]/g,'')
-        .slice(0,50);
-    }
-
-    function randomCode(length = 6){
-      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-      const arr = new Uint8Array(length);
-      crypto.getRandomValues(arr);
-      let out = '';
-      for(const n of arr) out += chars[n % chars.length];
-      return out;
-    }
-
-    function b64urlFromBytes(bytes){
-      let binary = '';
-      bytes.forEach(b => binary += String.fromCharCode(b));
-      return btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
-    }
-
-    function bytesFromB64url(text){
-      text = String(text).replace(/-/g,'+').replace(/_/g,'/');
-      while(text.length % 4) text += '=';
-      const binary = atob(text);
-      const bytes = new Uint8Array(binary.length);
-      for(let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-      return bytes;
-    }
-
-    async function getKey(){
-      const encoded = new TextEncoder().encode(APP_KEY_TEXT);
-      const hash = await crypto.subtle.digest('SHA-256', encoded);
-      return crypto.subtle.importKey('raw', hash, { name:'AES-GCM' }, false, ['encrypt','decrypt']);
-    }
-
-    async function encryptData(data){
-      const key = await getKey();
-      const iv = crypto.getRandomValues(new Uint8Array(12));
-      const encoded = new TextEncoder().encode(JSON.stringify(data));
-      const encrypted = await crypto.subtle.encrypt({ name:'AES-GCM', iv }, key, encoded);
-      const merged = new Uint8Array(iv.length + encrypted.byteLength);
-      merged.set(iv, 0);
-      merged.set(new Uint8Array(encrypted), iv.length);
-      return b64urlFromBytes(merged);
-    }
-
-    async function decryptData(token){
-      const key = await getKey();
-      const merged = bytesFromB64url(token);
-      const iv = merged.slice(0,12);
-      const content = merged.slice(12);
-      const decrypted = await crypto.subtle.decrypt({ name:'AES-GCM', iv }, key, content);
-      return JSON.parse(new TextDecoder().decode(decrypted));
-    }
-
-    function buildClientLink(token){
-      const url = new URL(window.location.href);
-      url.search = '';
-      url.hash = 's=' + token;
+    function buildPublicLink(id){
+      const url=new URL(location.href);
+      url.search='?id='+encodeURIComponent(id);
+      url.hash='';
       return url.toString();
     }
 
-    createBtn.addEventListener('click', async () => {
-      clearError();
-      const url = realUrl.value.trim();
-      const name = orderName.value.trim().slice(0,80);
-      const code = cleanCode(customCode.value) || randomCode(6);
+    function formToRecord(){
+      const id=cleanCode(deliveryId.value)||randomCode(6);
+      const minutes=clamp(parseInt(durationMin.value||'35',10),1,999);
+      let manual=manualProgress.value.trim()===''?null:clamp(parseInt(manualProgress.value,10),0,100);
+      return {
+        id,
+        clientName:escapeText(clientName.value.trim()||'Entrega en ruta'),
+        destination:escapeText(destination.value.trim()||'Destino del cliente'),
+        originName:ORIGIN_NAME,
+        originReference:ORIGIN_REFERENCE,
+        startTime:startTime.value?new Date(startTime.value).toISOString():new Date().toISOString(),
+        durationMin:minutes,
+        manualProgress:manual,
+        status:status.value,
+        note:escapeText(driverNote.value.trim()||'Entrega en proceso'),
+        updatedAt:new Date().toISOString()
+      };
+    }
 
-      if(!isValidHttpUrl(url)){
-        showError('Pega un enlace válido que empiece con http:// o https://');
-        return;
-      }
+    function fillForm(record){
+      deliveryId.value=record.id||'';
+      clientName.value=record.clientName||'';
+      destination.value=record.destination||'';
+      if(record.startTime){const d=new Date(record.startTime);d.setMinutes(d.getMinutes()-d.getTimezoneOffset());startTime.value=d.toISOString().slice(0,16)}
+      durationMin.value=record.durationMin||35;
+      manualProgress.value=record.manualProgress===null||record.manualProgress===undefined?'':record.manualProgress;
+      status.value=record.status||'ruta';
+      driverNote.value=record.note||'';
+    }
 
-      createBtn.disabled = true;
-      createBtn.textContent = 'Generando...';
-
+    saveBtn.addEventListener('click',async()=>{
+      clearAlerts();saveSettings();
+      if(!githubOwner.value.trim()||!githubRepo.value.trim()||!githubToken.value.trim()){showError('Completa GitHub owner, repo y token.');return}
+      const record=formToRecord();
+      deliveryId.value=record.id;
+      saveBtn.disabled=true;saveBtn.textContent='Guardando...';
       try{
-        const token = await encryptData({
-          u: url,
-          n: name || 'Entrega en ruta',
-          c: code,
-          t: Date.now()
-        });
-
-        const link = buildClientLink(token);
-        publicLink.value = link;
-        previewBtn.href = link;
-        outputBox.style.display = 'block';
-      }catch(e){
-        showError('No se pudo generar el link. Intenta de nuevo.');
-      }finally{
-        createBtn.disabled = false;
-        createBtn.textContent = 'Generar link para cliente';
-      }
+        const current=await fetchJsonDataForAdmin();
+        current.data.deliveries[record.id]=record;
+        current.data.updatedAt=new Date().toISOString();
+        await putJsonData(current.sha,current.data);
+        const link=buildPublicLink(record.id);
+        publicLink.value=link;
+        previewBtn.href=link;
+        outputBox.style.display='block';
+        showOk('Entrega guardada/actualizada correctamente.');
+      }catch(e){showError(e.message||'Error guardando entrega.')}finally{saveBtn.disabled=false;saveBtn.textContent='Guardar / actualizar entrega'}
     });
 
-    copyBtn.addEventListener('click', async () => {
-      await navigator.clipboard.writeText(publicLink.value);
-      copyBtn.textContent = 'Copiado ✅';
-      setTimeout(() => copyBtn.textContent = 'Copiar', 1200);
-    });
-
-    whatsBtn.addEventListener('click', () => {
-      if(!publicLink.value) return;
-      const msg = 'Hola, aquí puedes ver el seguimiento de tu entrega de International Items: ' + publicLink.value;
-      window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank', 'noopener,noreferrer');
-    });
-
-    openTrackingBtn.addEventListener('click', () => {
-      if(!clientTrackingUrl) return;
-      window.location.href = clientTrackingUrl;
-    });
-
-    copyPageBtn.addEventListener('click', async () => {
-      await navigator.clipboard.writeText(window.location.href);
-      copyPageBtn.textContent = 'Copiado ✅';
-      setTimeout(() => copyPageBtn.textContent = 'Copiar esta página', 1200);
-    });
-
-    async function startClientMode(token){
+    loadBtn.addEventListener('click',async()=>{
+      clearAlerts();saveSettings();
+      const id=cleanCode(deliveryId.value);
+      if(!id){showError('Escribe el código de entrega que quieres cargar.');return}
+      loadBtn.disabled=true;loadBtn.textContent='Cargando...';
       try{
-        const data = await decryptData(token);
-        if(!data || !isValidHttpUrl(data.u)) throw new Error('Link inválido');
+        const current=await fetchJsonDataForAdmin();
+        const record=current.data.deliveries[id];
+        if(!record)throw new Error('No encontré una entrega con ese código.');
+        fillForm(record);
+        const link=buildPublicLink(record.id);
+        publicLink.value=link;
+        previewBtn.href=link;
+        outputBox.style.display='block';
+        showOk('Entrega cargada. Puedes editarla y guardar cambios.');
+      }catch(e){showError(e.message||'Error cargando entrega.')}finally{loadBtn.disabled=false;loadBtn.textContent='Cargar entrega existente'}
+    });
 
-        adminPage.style.display = 'none';
-        clientPage.style.display = 'flex';
+    copyBtn.addEventListener('click',async()=>{await navigator.clipboard.writeText(publicLink.value);copyBtn.textContent='Copiado ✅';setTimeout(()=>copyBtn.textContent='Copiar',1200)});
+    whatsBtn.addEventListener('click',()=>{if(!publicLink.value)return;const msg='Hola, aquí puedes ver el seguimiento estimado de tu entrega de International Items: '+publicLink.value;window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank','noopener,noreferrer')});
 
-        clientTrackingUrl = data.u;
-        clientOrder.textContent = data.n || 'Entrega en ruta';
-        clientCode.textContent = 'Código de seguimiento: ' + (data.c || 'International Items');
-      }catch(e){
-        adminPage.style.display = 'grid';
-        clientPage.style.display = 'none';
-        showError('Este link de seguimiento no es válido o está dañado.');
+    function statusLabel(s){
+      const map={preparando:'● Preparando',ruta:'● En ruta',cerca:'● Cerca del destino',atrasado:'● Con atraso',entregado:'● Entregado'};
+      return map[s]||'● En ruta';
+    }
+
+    function calculateProgress(record){
+      if(record.status==='entregado')return 100;
+      if(record.manualProgress!==null&&record.manualProgress!==undefined&&record.manualProgress!=='')return clamp(Number(record.manualProgress)||0,0,100);
+      if(record.status==='preparando')return 0;
+      const start=new Date(record.startTime).getTime();
+      const end=start+(Number(record.durationMin)||35)*60000;
+      const now=Date.now();
+      if(now<=start)return 0;
+      if(now>=end)return 96;
+      return clamp(Math.round(((now-start)/(end-start))*96),0,96);
+    }
+
+    function eta(record,progress){
+      if(record.status==='entregado'||progress>=100)return 'Entregado';
+      if(record.status==='preparando')return 'Por iniciar';
+      const start=new Date(record.startTime).getTime();
+      const end=start+(Number(record.durationMin)||35)*60000;
+      const left=Math.max(0,Math.ceil((end-Date.now())/60000));
+      if(record.status==='atrasado')return left>0?`Aprox. ${left+10} min con atraso`:'Con atraso';
+      if(left<=0)return 'Llegando pronto';
+      return `Aprox. ${left} min`;
+    }
+
+    function setStepProgress(progress,statusValue){
+      steps.forEach(s=>s.classList.remove('active'));
+      if(progress>=0)steps[0].classList.add('active');
+      if(progress>=8||statusValue==='ruta'||statusValue==='cerca'||statusValue==='atrasado'||statusValue==='entregado')steps[1].classList.add('active');
+      if(progress>=72||statusValue==='cerca'||statusValue==='entregado')steps[2].classList.add('active');
+      if(progress>=100||statusValue==='entregado')steps[3].classList.add('active');
+    }
+
+    function interpolate(points,t){
+      t=clamp(t,0,1);
+      const total=points.length-1;
+      const raw=t*total;
+      const i=Math.min(points.length-2,Math.floor(raw));
+      const f=raw-i;
+      const a=points[i],b=points[i+1];
+      return {x:a.x+(b.x-a.x)*f,y:a.y+(b.y-a.y)*f,angle:Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI};
+    }
+
+    function updateMoto(progress){
+      const done=clamp(progress,0,100)/100;
+      const pos=interpolate(routePoints,done);
+      moto.style.left=pos.x+'%';moto.style.top=pos.y+'%';moto.style.transform=`translate(-50%,-50%) rotate(${pos.angle}deg)`;
+      pulse.style.left=pos.x+'%';pulse.style.top=pos.y+'%';
+      pinStart.style.left=routePoints[0].x+'%';pinStart.style.top=routePoints[0].y+'%';
+      const last=routePoints[routePoints.length-1];pinEnd.style.left=last.x+'%';pinEnd.style.top=last.y+'%';
+      const len=pathDone.getTotalLength();pathDone.style.strokeDasharray=len;pathDone.style.strokeDashoffset=len-(len*done);
+    }
+
+    function renderClient(record){
+      const p=calculateProgress(record);
+      clientOrder.textContent=record.clientName||'Entrega en ruta';
+      clientCode.textContent='Código de seguimiento: '+(record.id||'International Items');
+      originText.textContent=record.originName||ORIGIN_NAME;
+      destText.textContent=record.destination||'Destino del cliente';
+      statusPill.textContent=statusLabel(record.status);
+      statusPill.className='pill '+(record.status==='atrasado'?'pillYellow':record.status==='preparando'?'pillBlue':'');
+      percentText.textContent=p+'%';
+      progressFill.style.width=p+'%';
+      etaText.textContent=eta(record,p);
+      updatedText.textContent=record.updatedAt?new Date(record.updatedAt).toLocaleString('es-HN',{hour:'2-digit',minute:'2-digit',day:'2-digit',month:'2-digit'}):'--';
+      noteText.textContent=record.note||'Entrega en proceso';
+      updateMoto(p);
+      setStepProgress(p,record.status);
+    }
+
+    async function fetchClientRecord(id){
+      const path=(localStorage.getItem('ii_github_path')||'data/entregas.json').replace(/^\/+/, '');
+      const urls=[`${location.origin}/${path}?v=${Date.now()}`,`./${path}?v=${Date.now()}`];
+      let data=null;
+      for(const u of urls){
+        try{const res=await fetch(u,{cache:'no-store'});if(res.ok){data=await res.json();break}}catch{}
       }
+      if(!data||!data.deliveries||!data.deliveries[id])throw new Error('Entrega no encontrada');
+      return data.deliveries[id];
+    }
+
+    async function startClientMode(id){
+      adminPage.style.display='none';clientPage.style.display='flex';
+      async function refresh(){
+        try{const record=await fetchClientRecord(id);renderClient(record)}catch(e){
+          clientOrder.textContent='Seguimiento no disponible';clientCode.textContent='Código: '+id;destText.textContent='No encontrado';noteText.textContent='Este seguimiento aún no está publicado o no existe.';updateMoto(0);
+        }
+      }
+      await refresh();
+      setInterval(refresh,30000);
+      setInterval(async()=>{try{const record=await fetchClientRecord(id);renderClient(record)}catch{}},60000);
     }
 
     function init(){
-      const hash = window.location.hash || '';
-      if(hash.startsWith('#s=')){
-        const token = hash.slice(3);
-        startClientMode(token);
+      loadSettings();
+      const params=new URLSearchParams(location.search);
+      const id=cleanCode(params.get('id'));
+      if(location.pathname.includes('/admin')){
+        adminPage.style.display='grid';clientPage.style.display='none';return;
       }
+      if(id){startClientMode(id);return;}
+      adminPage.style.display='grid';clientPage.style.display='none';
     }
 
     init();
