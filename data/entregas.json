@@ -1,0 +1,18 @@
+{
+  "deliveries": {
+    "82KYLL": {
+      "id": "82KYLL",
+      "clientName": "RonalFlores27",
+      "destination": "La Mundial Torocagua",
+      "originName": "Punto de salida International Items",
+      "originReference": "https://maps.app.goo.gl/keYouYa4sRC9dAFW8?g_st=ac",
+      "startTime": "2026-05-27T23:33:00.000Z",
+      "durationMin": 15,
+      "manualProgress": null,
+      "status": "ruta",
+      "note": "Entrega en proceso",
+      "updatedAt": "2026-05-27T23:34:35.072Z"
+    }
+  },
+  "updatedAt": "2026-05-27T23:34:35.460Z"
+}
