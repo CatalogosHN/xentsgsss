@@ -12,7 +12,20 @@
       "status": "ruta",
       "note": "Entrega en proceso",
       "updatedAt": "2026-05-27T23:44:31.240Z"
+    },
+    "YOMERON": {
+      "id": "YOMERON",
+      "clientName": "Ronal Flores",
+      "destination": "La mundial Torocagua",
+      "originName": "Punto de salida International Items",
+      "originReference": "https://maps.app.goo.gl/keYouYa4sRC9dAFW8?g_st=ac",
+      "startTime": "2026-05-27T23:48:00.000Z",
+      "durationMin": 35,
+      "manualProgress": null,
+      "status": "ruta",
+      "note": "Entrega en proceso",
+      "updatedAt": "2026-05-27T23:48:41.260Z"
     }
   },
-  "updatedAt": "2026-05-27T23:44:31.538Z"
+  "updatedAt": "2026-05-27T23:48:41.624Z"
 }
