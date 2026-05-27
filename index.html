@@ -7,17 +7,18 @@
   <meta name="robots" content="noindex,nofollow" />
   <style>
     :root{
-      --bg1:#07111f;
-      --bg2:#10233d;
+      --bg1:#06111f;
+      --bg2:#102b38;
       --card:rgba(255,255,255,.11);
-      --card2:rgba(255,255,255,.16);
+      --card2:rgba(255,255,255,.17);
       --line:rgba(255,255,255,.18);
       --text:#fff;
-      --muted:rgba(255,255,255,.70);
+      --muted:rgba(255,255,255,.72);
       --green:#22c55e;
       --blue:#38bdf8;
+      --yellow:#facc15;
       --red:#fb7185;
-      --shadow:0 28px 80px rgba(0,0,0,.35);
+      --shadow:0 28px 80px rgba(0,0,0,.36);
       --radius:28px;
     }
 
@@ -30,7 +31,7 @@
       color:var(--text);
       background:
         radial-gradient(circle at 18% 12%,rgba(56,189,248,.25),transparent 32%),
-        radial-gradient(circle at 85% 10%,rgba(34,197,94,.22),transparent 31%),
+        radial-gradient(circle at 86% 10%,rgba(34,197,94,.22),transparent 31%),
         linear-gradient(145deg,var(--bg1),var(--bg2));
       padding:18px;
     }
@@ -41,9 +42,7 @@
       place-items:center;
     }
 
-    .wrap{
-      width:min(860px,100%);
-    }
+    .wrap{width:min(880px,100%)}
 
     .box{
       border:1px solid var(--line);
@@ -88,13 +87,10 @@
       margin:0 0 22px;
       color:var(--muted);
       line-height:1.5;
-      max-width:680px;
+      max-width:700px;
     }
 
-    .grid{
-      display:grid;
-      gap:14px;
-    }
+    .grid{display:grid;gap:14px}
 
     .row{
       display:grid;
@@ -124,11 +120,7 @@
       font-family:inherit;
     }
 
-    textarea{
-      resize:vertical;
-      min-height:104px;
-    }
-
+    textarea{resize:vertical;min-height:104px}
     input::placeholder,textarea::placeholder{color:rgba(255,255,255,.38)}
 
     .btn{
@@ -175,10 +167,7 @@
       margin-top:10px;
     }
 
-    .linkbox input{
-      font-weight:800;
-      color:#bbf7d0;
-    }
+    .linkbox input{font-weight:800;color:#bbf7d0}
 
     .copy{
       border:1px solid var(--line);
@@ -218,41 +207,77 @@
 
     .clientPage{
       display:none;
-      width:min(1120px,100%);
+      width:min(920px,100%);
+      min-height:calc(100vh - 36px);
       margin:0 auto;
+      align-items:center;
+      justify-content:center;
     }
 
-    .head{
+    .clientCard{
+      width:100%;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg,var(--card2),var(--card));
+      border-radius:32px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(18px);
+      padding:28px;
       text-align:center;
-      padding:14px 8px 16px;
+      overflow:hidden;
+      position:relative;
     }
 
-    .head .sub{
-      margin-left:auto;
-      margin-right:auto;
+    .clientCard:before{
+      content:"";
+      position:absolute;
+      inset:auto -80px -120px auto;
+      width:260px;
+      height:260px;
+      border-radius:50%;
+      background:rgba(34,197,94,.16);
+      filter:blur(5px);
     }
 
-    .info{
+    .truck{
+      width:110px;
+      height:110px;
+      margin:4px auto 18px;
+      border-radius:34px;
+      display:grid;
+      place-items:center;
+      background:rgba(56,189,248,.13);
+      border:1px solid rgba(56,189,248,.28);
+      box-shadow:0 24px 70px rgba(56,189,248,.14);
+      font-size:54px;
+      position:relative;
+      z-index:1;
+    }
+
+    .clientCard h1{position:relative;z-index:1}
+
+    .statusBox{
+      position:relative;
+      z-index:1;
+      margin:20px 0;
       display:grid;
       grid-template-columns:1fr auto;
       gap:12px;
+      text-align:left;
       align-items:center;
-      margin:0 0 14px;
-      padding:14px 16px;
+      padding:16px;
       border:1px solid var(--line);
       border-radius:22px;
-      background:var(--card);
-      backdrop-filter:blur(16px);
+      background:rgba(0,0,0,.16);
     }
 
-    .info b{display:block;margin-bottom:3px}
-    .info span{color:var(--muted);font-size:14px}
+    .statusBox b{display:block;margin-bottom:4px;font-size:18px}
+    .statusBox span{color:var(--muted);font-size:14px}
 
     .pill{
       display:inline-flex;
       align-items:center;
       gap:7px;
-      padding:9px 12px;
+      padding:10px 13px;
       border-radius:999px;
       background:rgba(34,197,94,.13);
       border:1px solid rgba(34,197,94,.32);
@@ -262,67 +287,47 @@
       white-space:nowrap;
     }
 
-    .map{
-      height:calc(100vh - 250px);
-      min-height:520px;
-      border-radius:26px;
-      overflow:hidden;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.08);
-      box-shadow:var(--shadow);
+    .steps{
       position:relative;
-    }
-
-    iframe{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      border:0;
-      background:#0b1220;
-    }
-
-    .loading{
-      position:absolute;
-      inset:0;
+      z-index:1;
       display:grid;
-      place-items:center;
-      text-align:center;
-      padding:22px;
-      background:
-        linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px),
-        rgba(255,255,255,.045);
-      background-size:38px 38px;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin:18px 0;
+      text-align:left;
     }
 
-    .pin{
-      width:88px;
-      height:88px;
-      margin:0 auto 16px;
-      border-radius:28px;
-      display:grid;
-      place-items:center;
-      background:rgba(56,189,248,.14);
-      border:1px solid rgba(56,189,248,.30);
-      font-size:42px;
-      box-shadow:0 20px 60px rgba(56,189,248,.13);
+    .step{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.07);
+      border-radius:20px;
+      padding:14px;
     }
-    .safeNotice{
-      position:absolute;
-      left:16px;
-      right:16px;
-      bottom:16px;
-      display:none;
-      text-align:center;
-      padding:14px 16px;
+
+    .step strong{display:block;margin-bottom:5px}
+    .step span{color:var(--muted);font-size:13px;line-height:1.35}
+
+    .clientActions{
+      position:relative;
+      z-index:1;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .warning{
+      position:relative;
+      z-index:1;
+      margin-top:15px;
+      color:rgba(255,255,255,.78);
+      font-size:13px;
+      line-height:1.45;
+      border:1px solid rgba(250,204,21,.25);
+      background:rgba(250,204,21,.08);
       border-radius:18px;
-      background:rgba(7,17,31,.88);
-      border:1px solid rgba(255,255,255,.22);
-      color:#fff;
-      box-shadow:0 10px 30px rgba(0,0,0,.25);
-      font-weight:800;
-      line-height:1.35;
+      padding:12px 14px;
+      text-align:left;
     }
 
     footer{
@@ -330,17 +335,17 @@
       color:rgba(255,255,255,.55);
       font-size:12px;
       margin-top:14px;
+      position:relative;
+      z-index:1;
     }
 
     @media(max-width:700px){
       body{padding:14px}
-      .box{padding:18px}
-      .row{grid-template-columns:1fr}
+      .box,.clientCard{padding:18px}
+      .row,.statusBox,.steps,.clientActions{grid-template-columns:1fr}
       .linkbox{flex-direction:column}
       .copy{padding:13px}
-      .info{grid-template-columns:1fr}
-      .map{height:calc(100vh - 310px);min-height:470px}
-      .safeNotice{bottom:12px}
+      .truck{width:96px;height:96px;font-size:48px}
     }
   </style>
 </head>
@@ -386,40 +391,41 @@
           </div>
         </div>
 
-        <p class="note">Versión compatible con GitHub Pages. El enlace interno no se muestra visualmente al cliente ni queda escrito en el HTML público.</p>
+        <p class="note">Versión compatible con GitHub Pages. El cliente recibe una página limpia de International Items y desde ahí puede abrir el seguimiento externo.</p>
         <div class="mini">www.entregas.itemshn.com</div>
       </div>
     </main>
   </section>
 
   <section id="clientPage" class="clientPage">
-    <section class="head">
+    <main class="clientCard">
       <div class="brand"><span class="logo">📦</span> International Items</div>
+      <div class="truck">🛵</div>
       <h1>Seguimiento de Entrega<br>International Items</h1>
-      <p class="sub">Consulta el avance de tu entrega desde esta vista privada.</p>
-    </section>
+      <p class="sub" style="margin-left:auto;margin-right:auto;">Tu entrega está en proceso. Presiona el botón para consultar el avance del repartidor.</p>
 
-    <section class="info">
-      <div>
-        <b id="clientOrder">Entrega en ruta</b>
-        <span id="clientCode">Código de seguimiento</span>
-      </div>
-      <div class="pill">● En ruta</div>
-    </section>
-
-    <section class="map">
-      <div class="loading" id="loadingBox">
+      <section class="statusBox">
         <div>
-          <div class="pin">📍</div>
-          <h2>Cargando seguimiento...</h2>
-          <p style="color:var(--muted);line-height:1.5;margin:0;">Estamos preparando la vista de entrega.</p>
+          <b id="clientOrder">Entrega en ruta</b>
+          <span id="clientCode">Código de seguimiento</span>
         </div>
-      </div>
-      <iframe id="trackingFrame" title="Seguimiento de entrega" referrerpolicy="no-referrer"></iframe>
-      <div class="safeNotice" id="safeNotice">El seguimiento está protegido. Si no carga aquí, el proveedor no permite mostrarlo dentro de una página externa.</div>
-    </section>
+        <div class="pill">● En ruta</div>
+      </section>
 
-    <footer>© International Items · Seguimiento privado de entrega</footer>
+      <section class="steps">
+        <div class="step"><strong>✅ Confirmado</strong><span>Tu pedido fue registrado correctamente.</span></div>
+        <div class="step"><strong>🛵 Asignado</strong><span>El repartidor ya tiene el seguimiento activo.</span></div>
+        <div class="step"><strong>📍 En camino</strong><span>Consulta el avance desde el botón de seguimiento.</span></div>
+      </section>
+
+      <section class="clientActions">
+        <button class="btn" id="openTrackingBtn" type="button">Abrir seguimiento</button>
+        <button class="btn btn2" id="copyPageBtn" type="button">Copiar esta página</button>
+      </section>
+
+      <div class="warning">Por seguridad y compatibilidad, el seguimiento se abre fuera de esta página cuando el proveedor no permite mostrarlo incrustado.</div>
+      <footer>© International Items · Seguimiento privado de entrega</footer>
+    </main>
   </section>
 
   <script>
@@ -439,9 +445,10 @@
     const whatsBtn = document.getElementById('whatsBtn');
     const clientOrder = document.getElementById('clientOrder');
     const clientCode = document.getElementById('clientCode');
-    const trackingFrame = document.getElementById('trackingFrame');
-    const loadingBox = document.getElementById('loadingBox');
-    const safeNotice = document.getElementById('safeNotice');
+    const openTrackingBtn = document.getElementById('openTrackingBtn');
+    const copyPageBtn = document.getElementById('copyPageBtn');
+
+    let clientTrackingUrl = '';
 
     function showError(msg){
       errorBox.textContent = msg;
@@ -573,26 +580,28 @@
       window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank', 'noopener,noreferrer');
     });
 
+    openTrackingBtn.addEventListener('click', () => {
+      if(!clientTrackingUrl) return;
+      window.location.href = clientTrackingUrl;
+    });
+
+    copyPageBtn.addEventListener('click', async () => {
+      await navigator.clipboard.writeText(window.location.href);
+      copyPageBtn.textContent = 'Copiado ✅';
+      setTimeout(() => copyPageBtn.textContent = 'Copiar esta página', 1200);
+    });
+
     async function startClientMode(token){
       try{
         const data = await decryptData(token);
         if(!data || !isValidHttpUrl(data.u)) throw new Error('Link inválido');
 
         adminPage.style.display = 'none';
-        clientPage.style.display = 'block';
+        clientPage.style.display = 'flex';
 
+        clientTrackingUrl = data.u;
         clientOrder.textContent = data.n || 'Entrega en ruta';
         clientCode.textContent = 'Código de seguimiento: ' + (data.c || 'International Items');
-
-        trackingFrame.onload = () => {
-          loadingBox.style.display = 'none';
-        };
-
-        trackingFrame.src = data.u;
-        setTimeout(() => {
-          loadingBox.style.display = 'none';
-          safeNotice.style.display = 'block';
-        }, 3500);
       }catch(e){
         adminPage.style.display = 'grid';
         clientPage.style.display = 'none';
