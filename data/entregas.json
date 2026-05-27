@@ -25,7 +25,23 @@
       "status": "ruta",
       "note": "Entrega en proceso",
       "updatedAt": "2026-05-27T23:48:41.260Z"
+    },
+    "YOMERON37": {
+      "id": "YOMERON37",
+      "clientName": "Guapon",
+      "destination": "Colonia Kennedy",
+      "originName": "Punto de salida International Items",
+      "originLat": 14.0430754,
+      "originLng": -87.2689159,
+      "destLat": 14.0651371,
+      "destLng": -87.2191182,
+      "startTime": "2026-05-27T23:57:00.000Z",
+      "durationMin": 5,
+      "manualProgress": null,
+      "status": "ruta",
+      "note": "Entrega en proceso",
+      "updatedAt": "2026-05-27T23:58:08.252Z"
     }
   },
-  "updatedAt": "2026-05-27T23:48:41.624Z"
+  "updatedAt": "2026-05-27T23:58:08.587Z"
 }
