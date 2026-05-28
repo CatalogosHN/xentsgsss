@@ -55,7 +55,7 @@
         <div class="err" id="errorBox"></div><div class="ok" id="okBox"></div>
         <div class="out" id="outputBox"><b>Link para compartir con el cliente:</b><div class="linkbox"><input id="publicLink" readonly><button class="copy" id="copyBtn">Copiar</button></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px"><a class="btn btn2" id="previewBtn" href="#" target="_blank" rel="noopener noreferrer">Vista previa</a><button class="btn btn2" id="whatsBtn" type="button">Enviar por WhatsApp</button></div></div>
         <p class="note">Para que la ruta sea real por calles, coloca coordenadas del destino. El cliente verá una ruta estimada, no GPS real.</p>
-        <div class="mini">Admin: www.entregas.itemshn.com/xadminpapuchomamado · Cliente: www.entregasenmoto.itemshn.com/?id=CODIGO</div>
+        <div class="mini">Admin: www.entregas.itemshn.com/xadminpapuchomamado · Cliente: www.entregas.itemshn.com/?id=CODIGO</div>
       </div>
     </main>
   </section>
@@ -74,7 +74,7 @@
     const ORIGIN_LAT = 14.0430754;
     const ORIGIN_LNG = -87.2689159;
     const DEFAULT_DATA_PATH = 'data/entregas.json';
-    const CLIENT_DOMAIN = 'https://www.entregasenmoto.itemshn.com/';
+    const CLIENT_DOMAIN = 'https://www.entregas.itemshn.com/';
     const adminPage = document.getElementById('adminPage'), clientPage = document.getElementById('clientPage');
     const githubOwner = document.getElementById('githubOwner'), githubRepo = document.getElementById('githubRepo'), githubBranch = document.getElementById('githubBranch'), githubPath = document.getElementById('githubPath'), githubToken = document.getElementById('githubToken'), trustedDevice = document.getElementById('trustedDevice'), clearTokenBtn = document.getElementById('clearTokenBtn');
     const deliveryId = document.getElementById('deliveryId'), clientName = document.getElementById('clientName'), destination = document.getElementById('destination'), destLat = document.getElementById('destLat'), destLng = document.getElementById('destLng'), mapsLink = document.getElementById('mapsLink'), extractBtn = document.getElementById('extractBtn'), startTime = document.getElementById('startTime'), durationMin = document.getElementById('durationMin'), manualProgress = document.getElementById('manualProgress'), status = document.getElementById('status'), driverNote = document.getElementById('driverNote');
