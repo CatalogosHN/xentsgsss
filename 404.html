@@ -7,28 +7,492 @@
   <meta name="robots" content="noindex,nofollow">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <style>
-    :root{--bg1:#06111f;--bg2:#102b38;--card:rgba(255,255,255,.11);--card2:rgba(255,255,255,.17);--line:rgba(255,255,255,.18);--text:#fff;--muted:rgba(255,255,255,.72);--green:#22c55e;--blue:#38bdf8;--yellow:#facc15;--red:#fb7185;--shadow:0 28px 80px rgba(0,0,0,.36);--radius:28px}
+    :root{
+      --bg1:#06111f;
+      --bg2:#102b38;
+      --card:rgba(255,255,255,.11);
+      --card2:rgba(255,255,255,.17);
+      --line:rgba(255,255,255,.18);
+      --text:#fff;
+      --muted:rgba(255,255,255,.72);
+      --green:#22c55e;
+      --blue:#38bdf8;
+      --yellow:#facc15;
+      --red:#fb7185;
+      --shadow:0 28px 80px rgba(0,0,0,.36);
+      --radius:28px;
+    }
+
     *{box-sizing:border-box}
-    body{margin:0;min-height:100vh;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:radial-gradient(circle at 18% 12%,rgba(56,189,248,.25),transparent 32%),radial-gradient(circle at 86% 10%,rgba(34,197,94,.22),transparent 31%),linear-gradient(145deg,var(--bg1),var(--bg2));padding:18px}
-    .center{min-height:calc(100vh - 36px);display:grid;place-items:center}.wrap{width:min(1120px,100%)}
-    .box,.clientCard{border:1px solid var(--line);background:linear-gradient(180deg,var(--card2),var(--card));border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter:blur(18px);padding:24px;overflow:hidden}
-    .brand{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--line);background:rgba(255,255,255,.08);border-radius:999px;padding:9px 14px;font-weight:900;margin-bottom:16px}.logo{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--green),var(--blue));box-shadow:0 0 22px rgba(34,197,94,.35)}
-    h1{margin:0 0 10px;font-size:clamp(28px,5vw,48px);line-height:1.04;letter-spacing:-1px}.sub{margin:0 0 20px;color:var(--muted);line-height:1.5;max-width:780px}
-    .grid{display:grid;gap:14px}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-    label{display:block;font-size:13px;text-transform:uppercase;letter-spacing:.55px;color:rgba(255,255,255,.82);font-weight:900;margin-bottom:8px}
-    input,textarea,select{width:100%;border:1px solid var(--line);background:rgba(0,0,0,.18);color:#fff;border-radius:18px;padding:14px 15px;font-size:16px;outline:none;font-family:inherit}textarea{resize:vertical;min-height:82px}input::placeholder,textarea::placeholder{color:rgba(255,255,255,.38)}option{color:#111;background:#fff}
-    .btn{border:0;cursor:pointer;border-radius:18px;padding:15px 16px;font-size:16px;font-weight:1000;color:#06120a;background:linear-gradient(135deg,var(--green),#86efac);box-shadow:0 14px 32px rgba(34,197,94,.22);width:100%;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}.btn:hover{filter:brightness(1.05)}.btn2{color:#fff;background:rgba(255,255,255,.13);border:1px solid var(--line);box-shadow:none}
-    .out{display:none;margin-top:18px;border:1px solid rgba(34,197,94,.30);background:rgba(34,197,94,.11);border-radius:22px;padding:16px}.out b{display:block;margin-bottom:8px}.linkbox{display:flex;gap:10px;margin-top:10px}.linkbox input{font-weight:800;color:#bbf7d0}.copy{border:1px solid var(--line);background:rgba(255,255,255,.13);color:#fff;border-radius:16px;padding:0 16px;font-weight:900;cursor:pointer;white-space:nowrap}
-    .err,.ok{display:none;margin-top:14px;border-radius:18px;padding:13px 14px;line-height:1.45}.err{border:1px solid rgba(251,113,133,.32);background:rgba(251,113,133,.14);color:#ffe4e6}.ok{border:1px solid rgba(34,197,94,.32);background:rgba(34,197,94,.13);color:#dcfce7}.note{margin-top:15px;color:var(--muted);font-size:13px;line-height:1.45}.mini{font-size:12px;color:rgba(255,255,255,.55);margin-top:14px;text-align:center}
-    .clientPage{display:none;width:min(1180px,100%);min-height:calc(100vh - 36px);margin:0 auto;align-items:center;justify-content:center}.clientCard{width:100%;padding:22px}.clientHead{text-align:center;padding:4px 6px 12px}.clientHead .sub{margin-left:auto;margin-right:auto;margin-bottom:0}
-    .statusBox{display:grid;grid-template-columns:1fr auto;gap:12px;text-align:left;align-items:center;padding:16px;border:1px solid var(--line);border-radius:22px;background:rgba(0,0,0,.16);margin:12px 0}.statusBox b{display:block;margin-bottom:4px;font-size:18px}.statusBox span{color:var(--muted);font-size:14px;line-height:1.35}
-    .pill{display:inline-flex;align-items:center;gap:7px;padding:10px 13px;border-radius:999px;background:rgba(34,197,94,.13);border:1px solid rgba(34,197,94,.32);color:#bbf7d0;font-size:13px;font-weight:900;white-space:nowrap}.pillYellow{background:rgba(250,204,21,.12);border-color:rgba(250,204,21,.28);color:#fef3c7}.pillBlue{background:rgba(56,189,248,.12);border-color:rgba(56,189,248,.28);color:#bae6fd}
-    .dashboard{display:grid;grid-template-columns:1.35fr .65fr;gap:14px;align-items:stretch}.mapCard{position:relative;min-height:560px;border-radius:28px;overflow:hidden;border:1px solid var(--line);background:#d9e3dc;box-shadow:0 20px 60px rgba(0,0,0,.25)}#map{position:absolute;inset:0;width:100%;height:100%;z-index:1}.leaflet-control-attribution{font-size:10px!important}
-    .mapOverlay{position:absolute;left:14px;right:14px;top:14px;z-index:600;display:grid;gap:8px;pointer-events:none}.mapOverlay div{display:flex;justify-content:space-between;gap:10px;align-items:center;background:rgba(255,255,255,.92);color:#111827;border-radius:16px;padding:10px 12px;box-shadow:0 8px 24px rgba(0,0,0,.14);font-weight:900;font-size:13px}.mapOverlay span{color:#4b5563;font-weight:700;text-align:right}
-    .motoIcon{width:46px;height:46px;border-radius:18px;display:grid;place-items:center;background:#111827;color:#fff;border:4px solid #fff;font-size:25px;box-shadow:0 14px 32px rgba(0,0,0,.35);position:relative}.motoPulse{width:82px;height:82px;border-radius:50%;border:3px solid rgba(34,197,94,.38);animation:pulse 1.7s infinite;position:absolute;left:-22px;top:-22px;pointer-events:none}@keyframes pulse{0%{transform:scale(.65);opacity:.9}100%{transform:scale(1.25);opacity:0}}
-    .sideCard{border:1px solid var(--line);border-radius:28px;background:rgba(0,0,0,.16);padding:18px;display:flex;flex-direction:column;gap:14px}.bigPercent{font-size:54px;font-weight:1000;letter-spacing:-2px;line-height:.95}.progressBar{height:16px;border-radius:999px;background:rgba(255,255,255,.15);overflow:hidden;border:1px solid var(--line)}.progressFill{height:100%;width:0%;border-radius:999px;background:linear-gradient(90deg,var(--green),var(--blue));transition:width .7s ease}.dataGrid{display:grid;gap:10px}.dataItem{border:1px solid var(--line);background:rgba(255,255,255,.07);border-radius:18px;padding:12px;text-align:left}.dataItem small{display:block;color:var(--muted);font-size:12px;margin-bottom:4px}.dataItem b{font-size:15px}
-    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}.step{border:1px solid var(--line);background:rgba(255,255,255,.07);border-radius:18px;padding:12px;text-align:left;opacity:.55}.step.active{opacity:1;border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.09)}.step strong{display:block;margin-bottom:5px}.step span{color:var(--muted);font-size:12.5px;line-height:1.35}.warning{margin-top:14px;color:rgba(255,255,255,.78);font-size:13px;line-height:1.45;border:1px solid rgba(250,204,21,.25);background:rgba(250,204,21,.08);border-radius:18px;padding:12px 14px;text-align:left}footer{text-align:center;color:rgba(255,255,255,.55);font-size:12px;margin-top:14px}
-    @media(max-width:900px){body{padding:12px}.box,.clientCard{padding:16px}.row,.row3,.dashboard,.statusBox,.steps{grid-template-columns:1fr}.linkbox{flex-direction:column}.copy{padding:13px}.mapCard{min-height:520px}.bigPercent{font-size:44px}.mapOverlay div{display:block}.mapOverlay span{display:block;text-align:left;margin-top:3px}.steps{gap:8px}}
+
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:Arial,Helvetica,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 18% 12%,rgba(56,189,248,.25),transparent 32%),
+        radial-gradient(circle at 86% 10%,rgba(34,197,94,.22),transparent 31%),
+        linear-gradient(145deg,var(--bg1),var(--bg2));
+      padding:18px;
+    }
+
+    .center{min-height:calc(100vh - 36px);display:grid;place-items:center}
+    .wrap{width:min(1120px,100%)}
+
+    .box,.clientCard{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg,var(--card2),var(--card));
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(18px);
+      padding:24px;
+      overflow:hidden;
+    }
+
+    .brand{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.08);
+      border-radius:999px;
+      padding:9px 14px;
+      font-weight:900;
+      margin-bottom:16px;
+    }
+
+    .logo{
+      width:34px;
+      height:34px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,var(--green),var(--blue));
+      box-shadow:0 0 22px rgba(34,197,94,.35);
+    }
+
+    h1{
+      margin:0 0 10px;
+      font-size:clamp(28px,5vw,48px);
+      line-height:1.04;
+      letter-spacing:-1px;
+    }
+
+    .sub{
+      margin:0 0 20px;
+      color:var(--muted);
+      line-height:1.5;
+      max-width:780px;
+    }
+
+    .grid{display:grid;gap:14px}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+
+    label{
+      display:block;
+      font-size:13px;
+      text-transform:uppercase;
+      letter-spacing:.55px;
+      color:rgba(255,255,255,.82);
+      font-weight:900;
+      margin-bottom:8px;
+    }
+
+    input,textarea,select{
+      width:100%;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.18);
+      color:#fff;
+      border-radius:18px;
+      padding:14px 15px;
+      font-size:16px;
+      outline:none;
+      font-family:inherit;
+    }
+
+    input[type="checkbox"]{
+      width:auto;
+      transform:scale(1.15);
+      accent-color:#22c55e;
+    }
+
+    textarea{resize:vertical;min-height:82px}
+    input::placeholder,textarea::placeholder{color:rgba(255,255,255,.38)}
+    option{color:#111;background:#fff}
+
+    .btn{
+      border:0;
+      cursor:pointer;
+      border-radius:18px;
+      padding:15px 16px;
+      font-size:16px;
+      font-weight:1000;
+      color:#06120a;
+      background:linear-gradient(135deg,var(--green),#86efac);
+      box-shadow:0 14px 32px rgba(34,197,94,.22);
+      width:100%;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      text-decoration:none;
+    }
+
+    .btn:hover{filter:brightness(1.05)}
+    .btn2{
+      color:#fff;
+      background:rgba(255,255,255,.13);
+      border:1px solid var(--line);
+      box-shadow:none;
+    }
+
+    .out{
+      display:none;
+      margin-top:18px;
+      border:1px solid rgba(34,197,94,.30);
+      background:rgba(34,197,94,.11);
+      border-radius:22px;
+      padding:16px;
+    }
+
+    .out b{display:block;margin-bottom:8px}
+
+    .linkbox{
+      display:flex;
+      gap:10px;
+      margin-top:10px;
+    }
+
+    .linkbox input{
+      font-weight:800;
+      color:#bbf7d0;
+    }
+
+    .copy{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.13);
+      color:#fff;
+      border-radius:16px;
+      padding:0 16px;
+      font-weight:900;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+
+    .err,.ok{
+      display:none;
+      margin-top:14px;
+      border-radius:18px;
+      padding:13px 14px;
+      line-height:1.45;
+    }
+
+    .err{
+      border:1px solid rgba(251,113,133,.32);
+      background:rgba(251,113,133,.14);
+      color:#ffe4e6;
+    }
+
+    .ok{
+      border:1px solid rgba(34,197,94,.32);
+      background:rgba(34,197,94,.13);
+      color:#dcfce7;
+    }
+
+    .note{
+      margin-top:15px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    .mini{
+      font-size:12px;
+      color:rgba(255,255,255,.55);
+      margin-top:14px;
+      text-align:center;
+    }
+
+    .clientPage{
+      display:none;
+      width:min(1180px,100%);
+      min-height:calc(100vh - 36px);
+      margin:0 auto;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .clientCard{
+      width:100%;
+      padding:22px;
+    }
+
+    .clientHead{
+      text-align:center;
+      padding:4px 6px 12px;
+    }
+
+    .clientHead .sub{
+      margin-left:auto;
+      margin-right:auto;
+      margin-bottom:0;
+    }
+
+    .statusBox{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:12px;
+      text-align:left;
+      align-items:center;
+      padding:16px;
+      border:1px solid var(--line);
+      border-radius:22px;
+      background:rgba(0,0,0,.16);
+      margin:12px 0;
+    }
+
+    .statusBox b{
+      display:block;
+      margin-bottom:4px;
+      font-size:18px;
+    }
+
+    .statusBox span{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.35;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      padding:10px 13px;
+      border-radius:999px;
+      background:rgba(34,197,94,.13);
+      border:1px solid rgba(34,197,94,.32);
+      color:#bbf7d0;
+      font-size:13px;
+      font-weight:900;
+      white-space:nowrap;
+    }
+
+    .pillYellow{
+      background:rgba(250,204,21,.12);
+      border-color:rgba(250,204,21,.28);
+      color:#fef3c7;
+    }
+
+    .pillBlue{
+      background:rgba(56,189,248,.12);
+      border-color:rgba(56,189,248,.28);
+      color:#bae6fd;
+    }
+
+    .dashboard{
+      display:grid;
+      grid-template-columns:1.35fr .65fr;
+      gap:14px;
+      align-items:stretch;
+    }
+
+    .mapCard{
+      position:relative;
+      min-height:560px;
+      border-radius:28px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      background:#d9e3dc;
+      box-shadow:0 20px 60px rgba(0,0,0,.25);
+    }
+
+    #map{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:1;
+    }
+
+    .leaflet-control-attribution{font-size:10px!important}
+
+    .mapOverlay{
+      position:absolute;
+      left:14px;
+      right:14px;
+      top:14px;
+      z-index:600;
+      display:grid;
+      gap:8px;
+      pointer-events:none;
+    }
+
+    .mapOverlay div{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:center;
+      background:rgba(255,255,255,.92);
+      color:#111827;
+      border-radius:16px;
+      padding:10px 12px;
+      box-shadow:0 8px 24px rgba(0,0,0,.14);
+      font-weight:900;
+      font-size:13px;
+    }
+
+    .mapOverlay span{
+      color:#4b5563;
+      font-weight:700;
+      text-align:right;
+    }
+
+    .motoIcon{
+      width:46px;
+      height:46px;
+      border-radius:18px;
+      display:grid;
+      place-items:center;
+      background:#111827;
+      color:#fff;
+      border:4px solid #fff;
+      font-size:25px;
+      box-shadow:0 14px 32px rgba(0,0,0,.35);
+      position:relative;
+    }
+
+    .motoPulse{
+      width:82px;
+      height:82px;
+      border-radius:50%;
+      border:3px solid rgba(34,197,94,.38);
+      animation:pulse 1.7s infinite;
+      position:absolute;
+      left:-22px;
+      top:-22px;
+      pointer-events:none;
+    }
+
+    @keyframes pulse{
+      0%{transform:scale(.65);opacity:.9}
+      100%{transform:scale(1.25);opacity:0}
+    }
+
+    .sideCard{
+      border:1px solid var(--line);
+      border-radius:28px;
+      background:rgba(0,0,0,.16);
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    .bigPercent{
+      font-size:54px;
+      font-weight:1000;
+      letter-spacing:-2px;
+      line-height:.95;
+    }
+
+    .progressBar{
+      height:16px;
+      border-radius:999px;
+      background:rgba(255,255,255,.15);
+      overflow:hidden;
+      border:1px solid var(--line);
+    }
+
+    .progressFill{
+      height:100%;
+      width:0%;
+      border-radius:999px;
+      background:linear-gradient(90deg,var(--green),var(--blue));
+      transition:width .7s ease;
+    }
+
+    .dataGrid{display:grid;gap:10px}
+
+    .dataItem{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.07);
+      border-radius:18px;
+      padding:12px;
+      text-align:left;
+    }
+
+    .dataItem small{
+      display:block;
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:4px;
+    }
+
+    .dataItem b{font-size:15px}
+
+    .steps{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .step{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.07);
+      border-radius:18px;
+      padding:12px;
+      text-align:left;
+      opacity:.55;
+    }
+
+    .step.active{
+      opacity:1;
+      border-color:rgba(34,197,94,.35);
+      background:rgba(34,197,94,.09);
+    }
+
+    .step strong{display:block;margin-bottom:5px}
+
+    .step span{
+      color:var(--muted);
+      font-size:12.5px;
+      line-height:1.35;
+    }
+
+    .warning{
+      margin-top:14px;
+      color:rgba(255,255,255,.78);
+      font-size:13px;
+      line-height:1.45;
+      border:1px solid rgba(250,204,21,.25);
+      background:rgba(250,204,21,.08);
+      border-radius:18px;
+      padding:12px 14px;
+      text-align:left;
+    }
+
+    footer{
+      text-align:center;
+      color:rgba(255,255,255,.55);
+      font-size:12px;
+      margin-top:14px;
+    }
+
+    @media(max-width:900px){
+      body{padding:12px}
+      .box,.clientCard{padding:16px}
+      .row,.row3,.dashboard,.statusBox,.steps{grid-template-columns:1fr}
+      .linkbox{flex-direction:column}
+      .copy{padding:13px}
+      .mapCard{min-height:520px}
+      .bigPercent{font-size:44px}
+      .mapOverlay div{display:block}
+      .mapOverlay span{display:block;text-align:left;margin-top:3px}
+      .steps{gap:8px}
+    }
   </style>
 </head>
 <body>
@@ -38,36 +502,187 @@
         <div class="brand"><span class="logo">🔐</span> International Items</div>
         <h1>Panel privado de entregas</h1>
         <p class="sub">Crea o actualiza una entrega estimada con mapa real, ruta por calles y moto animada. No muestra GPS real del repartidor.</p>
+
         <div class="grid">
-          <div class="row"><div><label for="githubOwner">Usuario u organización GitHub</label><input id="githubOwner" type="text" placeholder="Ej: CatalogosHN"></div><div><label for="githubRepo">Repositorio</label><input id="githubRepo" type="text" placeholder="Ej: EntregasInternationalItems"></div></div>
-          <div class="row"><div><label for="githubBranch">Rama</label><input id="githubBranch" type="text" value="main"></div><div><label for="githubPath">Archivo de datos</label><input id="githubPath" type="text" value="data/entregas.json"></div></div>
-          <div><label for="githubToken">Token GitHub solo para guardar cambios</label><input id="githubToken" type="password" placeholder="Pega tu token aquí solo en tu dispositivo"><div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;margin-top:10px"><label style="display:flex;align-items:center;gap:9px;margin:0;text-transform:none;letter-spacing:0;font-size:14px;color:rgba(255,255,255,.82)"><input id="trustedDevice" type="checkbox" style="width:auto"> Dispositivo de confianza, guardar token en este navegador</label><button class="copy" id="clearTokenBtn" type="button" style="padding:12px 14px">Borrar token</button></div></div>
+          <div class="row">
+            <div>
+              <label for="githubOwner">Usuario u organización GitHub</label>
+              <input id="githubOwner" type="text" placeholder="Ej: CatalogosHN">
+            </div>
+            <div>
+              <label for="githubRepo">Repositorio</label>
+              <input id="githubRepo" type="text" placeholder="Ej: EntregasInternationalItems">
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="githubBranch">Rama</label>
+              <input id="githubBranch" type="text" value="main">
+            </div>
+            <div>
+              <label for="githubPath">Archivo de datos</label>
+              <input id="githubPath" type="text" value="data/entregas.json">
+            </div>
+          </div>
+
+          <div>
+            <label for="githubToken">Token GitHub solo para guardar cambios</label>
+            <input id="githubToken" type="password" placeholder="Pega tu token aquí solo en tu dispositivo">
+            <div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;margin-top:10px">
+              <label style="display:flex;align-items:center;gap:9px;margin:0;text-transform:none;letter-spacing:0;font-size:14px;color:rgba(255,255,255,.82)">
+                <input id="trustedDevice" type="checkbox"> Dispositivo de confianza, guardar token en este navegador
+              </label>
+              <button class="copy" id="clearTokenBtn" type="button" style="padding:12px 14px">Borrar token</button>
+            </div>
+          </div>
+
           <hr style="width:100%;border:0;border-top:1px solid var(--line);margin:6px 0">
-          <div class="row"><div><label for="deliveryId">Código de entrega</label><input id="deliveryId" type="text" placeholder="Ej: RONAL27"></div><div><label for="clientName">Cliente o pedido</label><input id="clientName" type="text" placeholder="Ej: Ronal Flores"></div></div>
-          <div><label for="destination">Destino visible</label><textarea id="destination" placeholder="Ej: Col. Kennedy, cerca del punto indicado por el cliente"></textarea></div>
-          <div class="row"><div><label for="destLat">Latitud destino</label><input id="destLat" type="number" step="any" placeholder="Ej: 14.0835"></div><div><label for="destLng">Longitud destino</label><input id="destLng" type="number" step="any" placeholder="Ej: -87.1808"></div></div>
-          <div><label for="mapsLink">Link de Google Maps del destino del cliente</label><input id="mapsLink" type="text" placeholder="Pega un enlace completo de Google Maps que contenga coordenadas"></div>
+
+          <div class="row">
+            <div>
+              <label for="deliveryId">Código de entrega</label>
+              <input id="deliveryId" type="text" placeholder="Ej: RONAL27">
+            </div>
+            <div>
+              <label for="clientName">Cliente o pedido</label>
+              <input id="clientName" type="text" placeholder="Ej: Ronal Flores">
+            </div>
+          </div>
+
+          <div>
+            <label for="destination">Destino visible</label>
+            <textarea id="destination" placeholder="Ej: Col. Kennedy, cerca del punto indicado por el cliente"></textarea>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="destLat">Latitud destino</label>
+              <input id="destLat" type="number" step="any" placeholder="Ej: 14.0835">
+            </div>
+            <div>
+              <label for="destLng">Longitud destino</label>
+              <input id="destLng" type="number" step="any" placeholder="Ej: -87.1808">
+            </div>
+          </div>
+
+          <div>
+            <label for="mapsLink">Link de Google Maps del destino del cliente</label>
+            <input id="mapsLink" type="text" placeholder="Pega un enlace completo de Google Maps que contenga coordenadas">
+          </div>
+
           <button class="btn btn2" id="extractBtn" type="button">Usar este link como destino</button>
-          <div class="row3"><div><label for="startTime">Hora de salida</label><input id="startTime" type="datetime-local"></div><div><label for="durationMin">Duración estimada en minutos</label><input id="durationMin" type="number" min="1" value="35"></div><div><label for="manualProgress">Avance manual porcentaje</label><input id="manualProgress" type="number" min="0" max="100" placeholder="Automático"></div></div>
-          <div class="row"><div><label for="status">Estado</label><select id="status"><option value="preparando">Preparando entrega</option><option value="ruta" selected>En ruta</option><option value="cerca">Cerca del destino</option><option value="atrasado">Con atraso</option><option value="entregado">Entregado</option></select></div><div><label for="driverNote">Nota visible opcional</label><input id="driverNote" type="text" placeholder="Ej: Tráfico moderado, llega pronto"></div></div>
-          <div class="row"><button class="btn" id="saveBtn" type="button">Guardar o actualizar entrega</button><button class="btn btn2" id="loadBtn" type="button">Cargar entrega existente</button></div>
+
+          <div class="row3">
+            <div>
+              <label for="startTime">Hora de salida</label>
+              <input id="startTime" type="datetime-local">
+            </div>
+            <div>
+              <label for="durationMin">Duración estimada en minutos</label>
+              <input id="durationMin" type="number" min="1" value="35">
+            </div>
+            <div>
+              <label for="manualProgress">Avance manual porcentaje</label>
+              <input id="manualProgress" type="number" min="0" max="100" placeholder="Automático">
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="status">Estado</label>
+              <select id="status">
+                <option value="preparando">Preparando entrega</option>
+                <option value="ruta" selected>En ruta</option>
+                <option value="cerca">Cerca del destino</option>
+                <option value="atrasado">Con atraso</option>
+                <option value="destino">Delivery ya en el destino</option>
+              </select>
+            </div>
+            <div>
+              <label for="driverNote">Nota visible opcional</label>
+              <input id="driverNote" type="text" placeholder="Ej: Tráfico moderado, llega pronto">
+            </div>
+          </div>
+
+          <div class="row">
+            <button class="btn" id="saveBtn" type="button">Guardar o actualizar entrega</button>
+            <button class="btn btn2" id="loadBtn" type="button">Cargar entrega existente</button>
+          </div>
         </div>
-        <div class="err" id="errorBox"></div><div class="ok" id="okBox"></div>
-        <div class="out" id="outputBox"><b>Link para compartir con el cliente:</b><div class="linkbox"><input id="publicLink" readonly><button class="copy" id="copyBtn">Copiar</button></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px"><a class="btn btn2" id="previewBtn" href="#" target="_blank" rel="noopener noreferrer">Vista previa</a><button class="btn btn2" id="whatsBtn" type="button">Enviar por WhatsApp</button></div></div>
-        <p class="note">Para que la ruta sea real por calles, coloca coordenadas del destino. El cliente verá una ruta estimada, no GPS real.</p>
+
+        <div class="err" id="errorBox"></div>
+        <div class="ok" id="okBox"></div>
+
+        <div class="out" id="outputBox">
+          <b>Link para compartir con el cliente:</b>
+          <div class="linkbox">
+            <input id="publicLink" readonly>
+            <button class="copy" id="copyBtn">Copiar</button>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+            <a class="btn btn2" id="previewBtn" href="#" target="_blank" rel="noopener noreferrer">Vista previa</a>
+            <button class="btn btn2" id="whatsBtn" type="button">Enviar por WhatsApp</button>
+          </div>
+        </div>
+
+        <p class="note">Para que la ruta sea real por calles, coloca coordenadas del destino. Si pegas un link corto tipo maps.app.goo.gl y no extrae coordenadas, ábrelo primero en Google Maps y copia el enlace completo. El cliente verá una ruta estimada, no GPS real.</p>
         <div class="mini">Admin: www.entregas.itemshn.com/xadminpapuchomamado · Cliente: www.entregasenmoto.itemshn.com/?id=CODIGO</div>
       </div>
     </main>
   </section>
+
   <section id="clientPage" class="clientPage">
     <main class="clientCard">
-      <section class="clientHead"><div class="brand"><span class="logo">📦</span> International Items</div><h1>Seguimiento de Entrega<br>International Items</h1><p class="sub">Avance estimado de tu entrega. La ubicación mostrada es aproximada para proteger la privacidad del repartidor.</p></section>
-      <section class="statusBox"><div><b id="clientOrder">Entrega en ruta</b><span id="clientCode">Código de seguimiento</span></div><div class="pill" id="statusPill">● En ruta</div></section>
-      <section class="dashboard"><div class="mapCard"><div id="map"></div><div class="mapOverlay"><div>Salida <span id="originText">Punto de salida International Items</span></div><div>Destino <span id="destText">Destino del cliente</span></div></div></div><aside class="sideCard"><div><div class="bigPercent" id="percentText">0%</div><div class="progressBar"><div class="progressFill" id="progressFill"></div></div></div><div class="dataGrid"><div class="dataItem"><small>Tiempo estimado restante</small><b id="etaText">Calculando...</b></div><div class="dataItem"><small>Última actualización</small><b id="updatedText">--</b></div><div class="dataItem"><small>Nota</small><b id="noteText">Entrega en proceso</b></div></div></aside></section>
-      <section class="steps"><div class="step" id="step1"><strong>✅ Preparado</strong><span>El pedido fue confirmado.</span></div><div class="step" id="step2"><strong>🛵 En ruta</strong><span>El repartidor inició el recorrido.</span></div><div class="step" id="step3"><strong>📍 Cerca</strong><span>La entrega se aproxima al destino.</span></div><div class="step" id="step4"><strong>🏁 Entregado</strong><span>Entrega finalizada.</span></div></section>
-      <div class="warning">Este seguimiento es estimado y puede actualizarse por tráfico, clima, distancia o cambios en la ruta.</div><footer>© International Items · Seguimiento privado de entrega</footer>
+      <section class="clientHead">
+        <div class="brand"><span class="logo">📦</span> International Items</div>
+        <h1>Seguimiento de Entrega<br>International Items</h1>
+        <p class="sub">Avance estimado de tu entrega. La ubicación mostrada es aproximada para proteger la privacidad del repartidor.</p>
+      </section>
+
+      <section class="statusBox">
+        <div>
+          <b id="clientOrder">Entrega en ruta</b>
+          <span id="clientCode">Código de seguimiento</span>
+        </div>
+        <div class="pill" id="statusPill">● En ruta</div>
+      </section>
+
+      <section class="dashboard">
+        <div class="mapCard">
+          <div id="map"></div>
+          <div class="mapOverlay">
+            <div>Salida <span id="originText">Punto de salida International Items</span></div>
+            <div>Destino <span id="destText">Destino del cliente</span></div>
+          </div>
+        </div>
+
+        <aside class="sideCard">
+          <div>
+            <div class="bigPercent" id="percentText">0%</div>
+            <div class="progressBar"><div class="progressFill" id="progressFill"></div></div>
+          </div>
+
+          <div class="dataGrid">
+            <div class="dataItem"><small>Tiempo estimado restante</small><b id="etaText">Calculando...</b></div>
+            <div class="dataItem"><small>Última actualización</small><b id="updatedText">--</b></div>
+            <div class="dataItem"><small>Nota</small><b id="noteText">Entrega en proceso</b></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="steps">
+        <div class="step" id="step1"><strong>✅ Preparado</strong><span>El pedido fue confirmado.</span></div>
+        <div class="step" id="step2"><strong>🛵 En ruta</strong><span>El repartidor inició el recorrido.</span></div>
+        <div class="step" id="step3"><strong>📍 Cerca</strong><span>La entrega se aproxima al destino.</span></div>
+        <div class="step" id="step4"><strong>📞 Delivery en destino</strong><span>Mantente atento a la llamada del repartidor.</span></div>
+      </section>
+
+      <div class="warning">Este seguimiento es estimado y puede actualizarse por tráfico, clima, distancia o cambios en la ruta.</div>
+      <footer>© International Items · Seguimiento privado de entrega</footer>
     </main>
   </section>
+
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
     const ORIGIN_NAME = 'Punto de salida International Items';
@@ -75,53 +690,724 @@
     const ORIGIN_LNG = -87.2689159;
     const DEFAULT_DATA_PATH = 'data/entregas.json';
     const CLIENT_DOMAIN = 'https://www.entregasenmoto.itemshn.com/';
-    const adminPage = document.getElementById('adminPage'), clientPage = document.getElementById('clientPage');
-    const githubOwner = document.getElementById('githubOwner'), githubRepo = document.getElementById('githubRepo'), githubBranch = document.getElementById('githubBranch'), githubPath = document.getElementById('githubPath'), githubToken = document.getElementById('githubToken'), trustedDevice = document.getElementById('trustedDevice'), clearTokenBtn = document.getElementById('clearTokenBtn');
-    const deliveryId = document.getElementById('deliveryId'), clientName = document.getElementById('clientName'), destination = document.getElementById('destination'), destLat = document.getElementById('destLat'), destLng = document.getElementById('destLng'), mapsLink = document.getElementById('mapsLink'), extractBtn = document.getElementById('extractBtn'), startTime = document.getElementById('startTime'), durationMin = document.getElementById('durationMin'), manualProgress = document.getElementById('manualProgress'), status = document.getElementById('status'), driverNote = document.getElementById('driverNote');
-    const saveBtn = document.getElementById('saveBtn'), loadBtn = document.getElementById('loadBtn'), errorBox = document.getElementById('errorBox'), okBox = document.getElementById('okBox'), outputBox = document.getElementById('outputBox'), publicLink = document.getElementById('publicLink'), copyBtn = document.getElementById('copyBtn'), previewBtn = document.getElementById('previewBtn'), whatsBtn = document.getElementById('whatsBtn');
-    const clientOrder = document.getElementById('clientOrder'), clientCode = document.getElementById('clientCode'), statusPill = document.getElementById('statusPill'), originText = document.getElementById('originText'), destText = document.getElementById('destText'), percentText = document.getElementById('percentText'), progressFill = document.getElementById('progressFill'), etaText = document.getElementById('etaText'), updatedText = document.getElementById('updatedText'), noteText = document.getElementById('noteText');
-    const steps = [document.getElementById('step1'),document.getElementById('step2'),document.getElementById('step3'),document.getElementById('step4')];
-    let map, routeLine, doneLine, motoMarker, startMarker, endMarker, currentRoute = [], lastRouteId = '', currentRecord = null;
-    function showError(msg){errorBox.textContent=msg;errorBox.style.display='block';okBox.style.display='none'}
-    function showOk(msg){okBox.textContent=msg;okBox.style.display='block';errorBox.style.display='none'}
-    function clearAlerts(){errorBox.style.display='none';okBox.style.display='none'}
-    function cleanCode(value){let out='';let s=String(value || '').toUpperCase();let allowed='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-';for(let ch of s){if(allowed.includes(ch))out+=ch;if(out.length>=50)break}return out}
-    function randomCode(length){let chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789', arr=new Uint8Array(length || 6), out='';crypto.getRandomValues(arr);for(let n of arr)out+=chars[n % chars.length];return out}
-    function clamp(n,min,max){return Math.max(min,Math.min(max,n))}
-    function safeText(v){return String(v || '').split('<').join('').split('>').join('')}
-    function nowLocalInput(){let d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,16)}
-    function num(v,fallback){let n=Number(v);return Number.isFinite(n) ? n : fallback}
-    function extractNumbers(text){let nums=[], cur='', allowed='0123456789.-';for(let ch of String(text || '')){if(allowed.includes(ch)){cur+=ch}else{if(cur.includes('.') && cur.length>2)nums.push(Number(cur));cur=''}}if(cur.includes('.') && cur.length>2)nums.push(Number(cur));return nums.filter(Number.isFinite)}
-    function parseCoordsFromText(text){let nums=extractNumbers(text);for(let i=0;i<nums.length-1;i++){let a=nums[i], b=nums[i+1];if(a> -90 && a<90 && b> -180 && b<180)return {lat:a,lng:b}}return null}
-    extractBtn.onclick=function(){clearAlerts();let coords=parseCoordsFromText(mapsLink.value);if(!coords){showError('No pude extraer coordenadas. Si es un link corto tipo maps.app.goo.gl, ábrelo primero en Google Maps y copia el enlace completo o coloca latitud y longitud manualmente.');return}destLat.value=coords.lat;destLng.value=coords.lng;if(!destination.value.trim())destination.value='Destino indicado por link de Google Maps';showOk('Destino definido correctamente con el link de Google Maps.')};
-    function saveSettings(){localStorage.setItem('ii_github_owner',githubOwner.value.trim());localStorage.setItem('ii_github_repo',githubRepo.value.trim());localStorage.setItem('ii_github_branch',githubBranch.value.trim() || 'main');localStorage.setItem('ii_github_path',githubPath.value.trim() || DEFAULT_DATA_PATH);localStorage.setItem('ii_trusted_device',trustedDevice.checked ? '1' : '0');if(trustedDevice.checked){localStorage.setItem('ii_github_token',githubToken.value.trim())}else{localStorage.removeItem('ii_github_token')}}
-    function loadSettings(){githubOwner.value=localStorage.getItem('ii_github_owner') || 'CatalogosHN';githubRepo.value=localStorage.getItem('ii_github_repo') || '';githubBranch.value=localStorage.getItem('ii_github_branch') || 'main';githubPath.value=localStorage.getItem('ii_github_path') || DEFAULT_DATA_PATH;trustedDevice.checked=localStorage.getItem('ii_trusted_device')==='1';githubToken.value=trustedDevice.checked ? (localStorage.getItem('ii_github_token') || '') : '';startTime.value=nowLocalInput();deliveryId.value=randomCode(6)}
-    function cleanPath(p){p=String(p || DEFAULT_DATA_PATH).trim();while(p.startsWith('/'))p=p.slice(1);return p}
-    clearTokenBtn.onclick=function(){localStorage.removeItem('ii_github_token');localStorage.setItem('ii_trusted_device','0');trustedDevice.checked=false;githubToken.value='';showOk('Token borrado de este navegador.')};
-    function githubApiUrl(){let owner=githubOwner.value.trim(), repo=githubRepo.value.trim(), p=cleanPath(githubPath.value);return 'https://api.github.com/repos/' + encodeURIComponent(owner) + '/' + encodeURIComponent(repo) + '/contents/' + p}
-    async function fetchJsonDataForAdmin(){let token=githubToken.value.trim();let res=await fetch(githubApiUrl() + '?ref=' + encodeURIComponent(githubBranch.value.trim() || 'main'),{headers:{Accept:'application/vnd.github+json',Authorization:'Bearer ' + token}});if(res.status===404)return {sha:null,data:{deliveries:{}}};if(!res.ok)throw new Error('No pude leer el archivo de datos en GitHub. Revisa owner, repo, ruta, rama o token.');let json=await res.json();let cleanContent=json.content.split(String.fromCharCode(10)).join('');let text=decodeURIComponent(escape(atob(cleanContent)));let data;try{data=JSON.parse(text)}catch(e){data={deliveries:{}}}if(!data.deliveries)data.deliveries={};return {sha:json.sha,data:data}}
-    async function putJsonData(sha,data){let token=githubToken.value.trim();let content=btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2))));let body={message:'Actualizar entregas International Items',content:content,branch:githubBranch.value.trim() || 'main'};if(sha)body.sha=sha;let res=await fetch(githubApiUrl(),{method:'PUT',headers:{Accept:'application/vnd.github+json',Authorization:'Bearer ' + token,'Content-Type':'application/json'},body:JSON.stringify(body)});if(!res.ok){let err=await res.text();throw new Error('No se pudo guardar en GitHub. ' + err.slice(0,160))}return res.json()}
-    function buildPublicLink(id){return CLIENT_DOMAIN + '?id=' + encodeURIComponent(id)}
-    function formToRecord(){let id=cleanCode(deliveryId.value) || randomCode(6);let minutes=clamp(parseInt(durationMin.value || '35',10),1,999);let manual=manualProgress.value.trim()==='' ? null : clamp(parseInt(manualProgress.value,10),0,100);let lat=num(destLat.value,NaN), lng=num(destLng.value,NaN);if(!Number.isFinite(lat) || !Number.isFinite(lng))throw new Error('Ingresa latitud y longitud del destino para dibujar ruta real.');return {id:id,clientName:safeText(clientName.value.trim() || 'Entrega en ruta'),destination:safeText(destination.value.trim() || 'Destino del cliente'),originName:ORIGIN_NAME,originLat:ORIGIN_LAT,originLng:ORIGIN_LNG,destLat:lat,destLng:lng,startTime:startTime.value ? new Date(startTime.value).toISOString() : new Date().toISOString(),durationMin:minutes,manualProgress:manual,status:status.value,note:safeText(driverNote.value.trim() || 'Entrega en proceso'),updatedAt:new Date().toISOString()}}
-    function fillForm(r){deliveryId.value=r.id || '';clientName.value=r.clientName || '';destination.value=r.destination || '';destLat.value=r.destLat || '';destLng.value=r.destLng || '';if(r.startTime){let d=new Date(r.startTime);d.setMinutes(d.getMinutes()-d.getTimezoneOffset());startTime.value=d.toISOString().slice(0,16)}durationMin.value=r.durationMin || 35;manualProgress.value=r.manualProgress===null || r.manualProgress===undefined ? '' : r.manualProgress;status.value=r.status || 'ruta';driverNote.value=r.note || ''}
-    saveBtn.onclick=async function(){clearAlerts();saveSettings();if(!githubOwner.value.trim() || !githubRepo.value.trim() || !githubToken.value.trim()){showError('Completa GitHub owner, repo y token.');return}let record;try{record=formToRecord()}catch(e){showError(e.message);return}deliveryId.value=record.id;saveBtn.disabled=true;saveBtn.textContent='Guardando...';try{let current=await fetchJsonDataForAdmin();current.data.deliveries[record.id]=record;current.data.updatedAt=new Date().toISOString();await putJsonData(current.sha,current.data);let link=buildPublicLink(record.id);publicLink.value=link;previewBtn.href=link;outputBox.style.display='block';showOk('Entrega guardada o actualizada correctamente.')}catch(e){showError(e.message || 'Error guardando entrega.')}finally{saveBtn.disabled=false;saveBtn.textContent='Guardar o actualizar entrega'}};
-    loadBtn.onclick=async function(){clearAlerts();saveSettings();let id=cleanCode(deliveryId.value);if(!id){showError('Escribe el código de entrega que quieres cargar.');return}loadBtn.disabled=true;loadBtn.textContent='Cargando...';try{let current=await fetchJsonDataForAdmin();let record=current.data.deliveries[id];if(!record)throw new Error('No encontré una entrega con ese código.');fillForm(record);let link=buildPublicLink(record.id);publicLink.value=link;previewBtn.href=link;outputBox.style.display='block';showOk('Entrega cargada. Puedes editarla y guardar cambios.')}catch(e){showError(e.message || 'Error cargando entrega.')}finally{loadBtn.disabled=false;loadBtn.textContent='Cargar entrega existente'}};
-    copyBtn.onclick=async function(){await navigator.clipboard.writeText(publicLink.value);copyBtn.textContent='Copiado ✅';setTimeout(function(){copyBtn.textContent='Copiar'},1200)};
-    whatsBtn.onclick=function(){if(!publicLink.value)return;let msg='Hola, aquí puedes ver el seguimiento estimado de tu entrega de International Items: ' + publicLink.value;window.open('https://wa.me/?text=' + encodeURIComponent(msg),'_blank','noopener,noreferrer')};
-    function statusLabel(s){let map={preparando:'● Preparando',ruta:'● En ruta',cerca:'● Cerca del destino',atrasado:'● Con atraso',entregado:'● Entregado'};return map[s] || '● En ruta'}
-    function calculateProgress(r){if(r.status==='entregado')return 100;if(r.manualProgress!==null && r.manualProgress!==undefined && r.manualProgress!=='')return clamp(Number(r.manualProgress) || 0,0,100);if(r.status==='preparando')return 0;let start=new Date(r.startTime).getTime(), end=start+(Number(r.durationMin) || 35)*60000, now=Date.now();if(now<=start)return 0;if(now>=end)return 96;return clamp(Math.round(((now-start)/(end-start))*96),0,96)}
-    function eta(r,p){if(r.status==='entregado' || p>=100)return 'Entregado';if(r.status==='preparando')return 'Por iniciar';let start=new Date(r.startTime).getTime(), end=start+(Number(r.durationMin) || 35)*60000, left=Math.max(0,Math.ceil((end-Date.now())/60000));if(r.status==='atrasado')return left>0 ? 'Aprox. ' + (left+10) + ' min con atraso' : 'Con atraso';if(left<=0)return 'Llegando pronto';return 'Aprox. ' + left + ' min'}
-    function setStepProgress(p,s){steps.forEach(function(x){x.classList.remove('active')});if(p>=0)steps[0].classList.add('active');if(p>=8 || s==='ruta' || s==='cerca' || s==='atrasado' || s==='entregado')steps[1].classList.add('active');if(p>=72 || s==='cerca' || s==='entregado')steps[2].classList.add('active');if(p>=100 || s==='entregado')steps[3].classList.add('active')}
-    function initMap(){if(map)return;map=L.map('map',{zoomControl:true,scrollWheelZoom:false}).setView([ORIGIN_LAT,ORIGIN_LNG],13);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'OpenStreetMap'}).addTo(map)}
-    function motoIcon(){return L.divIcon({className:'',html:'<div class="motoIcon"><div class="motoPulse"></div>🛵</div>',iconSize:[46,46],iconAnchor:[23,23]})}
-    async function getRoute(oLat,oLng,dLat,dLng){let url='https://router.project-osrm.org/route/v1/driving/' + oLng + ',' + oLat + ';' + dLng + ',' + dLat + '?overview=full&geometries=geojson';try{let res=await fetch(url);if(!res.ok)throw new Error('Ruta no disponible');let data=await res.json();let coords=data.routes && data.routes[0] && data.routes[0].geometry && data.routes[0].geometry.coordinates;if(!coords || !coords.length)throw new Error('Ruta vacía');return coords.map(function(c){return [c[1],c[0]]})}catch(e){return [[oLat,oLng],[dLat,dLng]]}}
-    function pointAtProgress(route,p){if(!route.length)return [ORIGIN_LAT,ORIGIN_LNG];if(route.length===1)return route[0];let t=clamp(p,0,100)/100, raw=t*(route.length-1), i=Math.min(route.length-2,Math.floor(raw)), f=raw-i, a=route[i], b=route[i+1];return [a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f]}
-    async function drawRoute(r,p){initMap();let oLat=num(r.originLat,ORIGIN_LAT), oLng=num(r.originLng,ORIGIN_LNG), dLat=num(r.destLat,ORIGIN_LAT), dLng=num(r.destLng,ORIGIN_LNG), routeId=oLat + ',' + oLng + '-' + dLat + ',' + dLng;if(lastRouteId!==routeId || !currentRoute.length){currentRoute=await getRoute(oLat,oLng,dLat,dLng);lastRouteId=routeId;if(routeLine)map.removeLayer(routeLine);if(doneLine)map.removeLayer(doneLine);if(startMarker)map.removeLayer(startMarker);if(endMarker)map.removeLayer(endMarker);routeLine=L.polyline(currentRoute,{color:'#2563eb',weight:8,opacity:.35}).addTo(map);doneLine=L.polyline([],{color:'#22c55e',weight:8,opacity:.95}).addTo(map);startMarker=L.marker([oLat,oLng],{title:'Salida'}).addTo(map).bindPopup('Salida International Items');endMarker=L.marker([dLat,dLng],{title:'Destino'}).addTo(map).bindPopup('Destino del cliente');map.fitBounds(L.latLngBounds(currentRoute),{padding:[45,45]})}let doneCount=Math.max(1,Math.round((currentRoute.length-1)*(clamp(p,0,100)/100))), doneCoords=currentRoute.slice(0,doneCount+1), motoPos=pointAtProgress(currentRoute,p);doneLine.setLatLngs(doneCoords.concat([motoPos]));if(!motoMarker){motoMarker=L.marker(motoPos,{icon:motoIcon(),zIndexOffset:1000}).addTo(map)}else{motoMarker.setLatLng(motoPos)}}
-    async function renderClient(r){currentRecord=r;let p=calculateProgress(r);clientOrder.textContent=r.clientName || 'Entrega en ruta';clientCode.textContent='Código de seguimiento: ' + (r.id || 'International Items');originText.textContent=r.originName || ORIGIN_NAME;destText.textContent=r.destination || 'Destino del cliente';statusPill.textContent=statusLabel(r.status);statusPill.className='pill ' + (r.status==='atrasado' ? 'pillYellow' : r.status==='preparando' ? 'pillBlue' : '');percentText.textContent=p + '%';progressFill.style.width=p + '%';etaText.textContent=eta(r,p);updatedText.textContent=r.updatedAt ? new Date(r.updatedAt).toLocaleString('es-HN',{hour:'2-digit',minute:'2-digit',day:'2-digit',month:'2-digit'}) : '--';noteText.textContent=r.note || 'Entrega en proceso';setStepProgress(p,r.status);await drawRoute(r,p);setTimeout(function(){if(map)map.invalidateSize()},250)}
-    function renderLocalProgress(){if(!currentRecord || !map)return;let p=calculateProgress(currentRecord);percentText.textContent=p + '%';progressFill.style.width=p + '%';etaText.textContent=eta(currentRecord,p);setStepProgress(p,currentRecord.status);drawRoute(currentRecord,p)}
-    async function fetchClientRecord(id){let path=DEFAULT_DATA_PATH;let urls=[location.origin + '/' + path + '?v=' + Date.now(),'./' + path + '?v=' + Date.now()];for(let u of urls){try{let res=await fetch(u,{cache:'no-store'});if(res.ok){let data=await res.json();if(data.deliveries && data.deliveries[id])return data.deliveries[id]}}catch(e){}}throw new Error('Entrega no encontrada')}
-    async function startClientMode(id){adminPage.style.display='none';clientPage.style.display='flex';async function refresh(){try{let record=await fetchClientRecord(id);await renderClient(record)}catch(e){initMap();clientOrder.textContent='Seguimiento no disponible';clientCode.textContent='Código: ' + id;destText.textContent='No encontrado';noteText.textContent='Este seguimiento aún no está publicado o no existe.'}}await refresh();setInterval(refresh,30000);setInterval(renderLocalProgress,2500)}
-    function init(){loadSettings();let params=new URLSearchParams(location.search), id=cleanCode(params.get('id'));if(location.pathname.includes('/xadminpapuchomamado')){adminPage.style.display='grid';clientPage.style.display='none';return}if(id){startClientMode(id);return}adminPage.style.display='none';clientPage.style.display='flex';initMap();clientOrder.textContent='Seguimiento no disponible';clientCode.textContent='Falta código de entrega';destText.textContent='Solicita un enlace válido de International Items';noteText.textContent='No se encontró un código de seguimiento en el enlace.'}
+
+    const adminPage = document.getElementById('adminPage');
+    const clientPage = document.getElementById('clientPage');
+
+    const githubOwner = document.getElementById('githubOwner');
+    const githubRepo = document.getElementById('githubRepo');
+    const githubBranch = document.getElementById('githubBranch');
+    const githubPath = document.getElementById('githubPath');
+    const githubToken = document.getElementById('githubToken');
+    const trustedDevice = document.getElementById('trustedDevice');
+    const clearTokenBtn = document.getElementById('clearTokenBtn');
+
+    const deliveryId = document.getElementById('deliveryId');
+    const clientName = document.getElementById('clientName');
+    const destination = document.getElementById('destination');
+    const destLat = document.getElementById('destLat');
+    const destLng = document.getElementById('destLng');
+    const mapsLink = document.getElementById('mapsLink');
+    const extractBtn = document.getElementById('extractBtn');
+    const startTime = document.getElementById('startTime');
+    const durationMin = document.getElementById('durationMin');
+    const manualProgress = document.getElementById('manualProgress');
+    const status = document.getElementById('status');
+    const driverNote = document.getElementById('driverNote');
+
+    const saveBtn = document.getElementById('saveBtn');
+    const loadBtn = document.getElementById('loadBtn');
+    const errorBox = document.getElementById('errorBox');
+    const okBox = document.getElementById('okBox');
+    const outputBox = document.getElementById('outputBox');
+    const publicLink = document.getElementById('publicLink');
+    const copyBtn = document.getElementById('copyBtn');
+    const previewBtn = document.getElementById('previewBtn');
+    const whatsBtn = document.getElementById('whatsBtn');
+
+    const clientOrder = document.getElementById('clientOrder');
+    const clientCode = document.getElementById('clientCode');
+    const statusPill = document.getElementById('statusPill');
+    const originText = document.getElementById('originText');
+    const destText = document.getElementById('destText');
+    const percentText = document.getElementById('percentText');
+    const progressFill = document.getElementById('progressFill');
+    const etaText = document.getElementById('etaText');
+    const updatedText = document.getElementById('updatedText');
+    const noteText = document.getElementById('noteText');
+
+    const steps = [
+      document.getElementById('step1'),
+      document.getElementById('step2'),
+      document.getElementById('step3'),
+      document.getElementById('step4')
+    ];
+
+    let map;
+    let routeLine;
+    let doneLine;
+    let motoMarker;
+    let startMarker;
+    let endMarker;
+    let currentRoute = [];
+    let lastRouteId = '';
+    let currentRecord = null;
+
+    function showError(msg){
+      errorBox.textContent = msg;
+      errorBox.style.display = 'block';
+      okBox.style.display = 'none';
+    }
+
+    function showOk(msg){
+      okBox.textContent = msg;
+      okBox.style.display = 'block';
+      errorBox.style.display = 'none';
+    }
+
+    function clearAlerts(){
+      errorBox.style.display = 'none';
+      okBox.style.display = 'none';
+    }
+
+    function cleanCode(value){
+      let out = '';
+      let s = String(value || '').toUpperCase();
+      let allowed = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-';
+      for(let ch of s){
+        if(allowed.includes(ch)) out += ch;
+        if(out.length >= 50) break;
+      }
+      return out;
+    }
+
+    function randomCode(length){
+      let chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      let arr = new Uint8Array(length || 6);
+      let out = '';
+      crypto.getRandomValues(arr);
+      for(let n of arr) out += chars[n % chars.length];
+      return out;
+    }
+
+    function clamp(n,min,max){
+      return Math.max(min, Math.min(max, n));
+    }
+
+    function safeText(v){
+      return String(v || '').split('<').join('').split('>').join('');
+    }
+
+    function nowLocalInput(){
+      let d = new Date();
+      d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+      return d.toISOString().slice(0,16);
+    }
+
+    function num(v,fallback){
+      let n = Number(v);
+      return Number.isFinite(n) ? n : fallback;
+    }
+
+    function extractNumbers(text){
+      let nums = [];
+      let cur = '';
+      let allowed = '0123456789.-';
+      for(let ch of String(text || '')){
+        if(allowed.includes(ch)){
+          cur += ch;
+        }else{
+          if(cur.includes('.') && cur.length > 2) nums.push(Number(cur));
+          cur = '';
+        }
+      }
+      if(cur.includes('.') && cur.length > 2) nums.push(Number(cur));
+      return nums.filter(Number.isFinite);
+    }
+
+    function parseCoordsFromText(text){
+      let nums = extractNumbers(text);
+      for(let i=0; i<nums.length-1; i++){
+        let a = nums[i];
+        let b = nums[i+1];
+        if(a > -90 && a < 90 && b > -180 && b < 180){
+          return {lat:a, lng:b};
+        }
+      }
+      return null;
+    }
+
+    extractBtn.onclick = function(){
+      clearAlerts();
+      let coords = parseCoordsFromText(mapsLink.value);
+      if(!coords){
+        showError('No pude extraer coordenadas. Si es un link corto tipo maps.app.goo.gl, ábrelo primero en Google Maps y copia el enlace completo o coloca latitud y longitud manualmente.');
+        return;
+      }
+      destLat.value = coords.lat;
+      destLng.value = coords.lng;
+      if(!destination.value.trim()) destination.value = 'Destino indicado por link de Google Maps';
+      showOk('Destino definido correctamente con el link de Google Maps.');
+    };
+
+    function saveSettings(){
+      localStorage.setItem('ii_github_owner', githubOwner.value.trim());
+      localStorage.setItem('ii_github_repo', githubRepo.value.trim());
+      localStorage.setItem('ii_github_branch', githubBranch.value.trim() || 'main');
+      localStorage.setItem('ii_github_path', githubPath.value.trim() || DEFAULT_DATA_PATH);
+      localStorage.setItem('ii_trusted_device', trustedDevice.checked ? '1' : '0');
+
+      if(trustedDevice.checked){
+        localStorage.setItem('ii_github_token', githubToken.value.trim());
+      }else{
+        localStorage.removeItem('ii_github_token');
+      }
+    }
+
+    function loadSettings(){
+      githubOwner.value = localStorage.getItem('ii_github_owner') || 'CatalogosHN';
+      githubRepo.value = localStorage.getItem('ii_github_repo') || '';
+      githubBranch.value = localStorage.getItem('ii_github_branch') || 'main';
+      githubPath.value = localStorage.getItem('ii_github_path') || DEFAULT_DATA_PATH;
+      trustedDevice.checked = localStorage.getItem('ii_trusted_device') === '1';
+      githubToken.value = trustedDevice.checked ? (localStorage.getItem('ii_github_token') || '') : '';
+      startTime.value = nowLocalInput();
+      deliveryId.value = randomCode(6);
+    }
+
+    function cleanPath(p){
+      p = String(p || DEFAULT_DATA_PATH).trim();
+      while(p.startsWith('/')) p = p.slice(1);
+      return p;
+    }
+
+    clearTokenBtn.onclick = function(){
+      localStorage.removeItem('ii_github_token');
+      localStorage.setItem('ii_trusted_device','0');
+      trustedDevice.checked = false;
+      githubToken.value = '';
+      showOk('Token borrado de este navegador.');
+    };
+
+    function githubApiUrl(){
+      let owner = githubOwner.value.trim();
+      let repo = githubRepo.value.trim();
+      let p = cleanPath(githubPath.value);
+      return 'https://api.github.com/repos/' + encodeURIComponent(owner) + '/' + encodeURIComponent(repo) + '/contents/' + p;
+    }
+
+    async function fetchJsonDataForAdmin(){
+      let token = githubToken.value.trim();
+      let res = await fetch(githubApiUrl() + '?ref=' + encodeURIComponent(githubBranch.value.trim() || 'main'), {
+        headers:{
+          Accept:'application/vnd.github+json',
+          Authorization:'Bearer ' + token
+        }
+      });
+
+      if(res.status === 404) return {sha:null, data:{deliveries:{}}};
+
+      if(!res.ok){
+        throw new Error('No pude leer el archivo de datos en GitHub. Revisa owner, repo, ruta, rama o token.');
+      }
+
+      let json = await res.json();
+      let cleanContent = json.content.split(String.fromCharCode(10)).join('');
+      let text = decodeURIComponent(escape(atob(cleanContent)));
+
+      let data;
+      try{
+        data = JSON.parse(text);
+      }catch(e){
+        data = {deliveries:{}};
+      }
+
+      if(!data.deliveries) data.deliveries = {};
+      return {sha:json.sha, data:data};
+    }
+
+    async function putJsonData(sha,data){
+      let token = githubToken.value.trim();
+      let content = btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2))));
+      let body = {
+        message:'Actualizar entregas International Items',
+        content:content,
+        branch:githubBranch.value.trim() || 'main'
+      };
+
+      if(sha) body.sha = sha;
+
+      let res = await fetch(githubApiUrl(), {
+        method:'PUT',
+        headers:{
+          Accept:'application/vnd.github+json',
+          Authorization:'Bearer ' + token,
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify(body)
+      });
+
+      if(!res.ok){
+        let err = await res.text();
+        throw new Error('No se pudo guardar en GitHub. ' + err.slice(0,160));
+      }
+
+      return res.json();
+    }
+
+    function buildPublicLink(id){
+      return CLIENT_DOMAIN + '?id=' + encodeURIComponent(id);
+    }
+
+    function formToRecord(){
+      let id = cleanCode(deliveryId.value) || randomCode(6);
+      let minutes = clamp(parseInt(durationMin.value || '35',10),1,999);
+      let manual = manualProgress.value.trim() === '' ? null : clamp(parseInt(manualProgress.value,10),0,100);
+      let lat = num(destLat.value, NaN);
+      let lng = num(destLng.value, NaN);
+
+      if(!Number.isFinite(lat) || !Number.isFinite(lng)){
+        throw new Error('Ingresa latitud y longitud del destino para dibujar ruta real.');
+      }
+
+      return {
+        id:id,
+        clientName:safeText(clientName.value.trim() || 'Entrega en ruta'),
+        destination:safeText(destination.value.trim() || 'Destino del cliente'),
+        originName:ORIGIN_NAME,
+        originLat:ORIGIN_LAT,
+        originLng:ORIGIN_LNG,
+        destLat:lat,
+        destLng:lng,
+        startTime:startTime.value ? new Date(startTime.value).toISOString() : new Date().toISOString(),
+        durationMin:minutes,
+        manualProgress:manual,
+        status:status.value,
+        note:safeText(driverNote.value.trim() || 'Entrega en proceso'),
+        updatedAt:new Date().toISOString()
+      };
+    }
+
+    function fillForm(r){
+      deliveryId.value = r.id || '';
+      clientName.value = r.clientName || '';
+      destination.value = r.destination || '';
+      destLat.value = r.destLat || '';
+      destLng.value = r.destLng || '';
+
+      if(r.startTime){
+        let d = new Date(r.startTime);
+        d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+        startTime.value = d.toISOString().slice(0,16);
+      }
+
+      durationMin.value = r.durationMin || 35;
+      manualProgress.value = r.manualProgress === null || r.manualProgress === undefined ? '' : r.manualProgress;
+      status.value = r.status || 'ruta';
+      driverNote.value = r.note || '';
+    }
+
+    saveBtn.onclick = async function(){
+      clearAlerts();
+      saveSettings();
+
+      if(!githubOwner.value.trim() || !githubRepo.value.trim() || !githubToken.value.trim()){
+        showError('Completa GitHub owner, repo y token.');
+        return;
+      }
+
+      let record;
+      try{
+        record = formToRecord();
+      }catch(e){
+        showError(e.message);
+        return;
+      }
+
+      deliveryId.value = record.id;
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Guardando...';
+
+      try{
+        let current = await fetchJsonDataForAdmin();
+        current.data.deliveries[record.id] = record;
+        current.data.updatedAt = new Date().toISOString();
+
+        await putJsonData(current.sha, current.data);
+
+        let link = buildPublicLink(record.id);
+        publicLink.value = link;
+        previewBtn.href = link;
+        outputBox.style.display = 'block';
+
+        showOk('Entrega guardada o actualizada correctamente.');
+      }catch(e){
+        showError(e.message || 'Error guardando entrega.');
+      }finally{
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Guardar o actualizar entrega';
+      }
+    };
+
+    loadBtn.onclick = async function(){
+      clearAlerts();
+      saveSettings();
+
+      let id = cleanCode(deliveryId.value);
+      if(!id){
+        showError('Escribe el código de entrega que quieres cargar.');
+        return;
+      }
+
+      loadBtn.disabled = true;
+      loadBtn.textContent = 'Cargando...';
+
+      try{
+        let current = await fetchJsonDataForAdmin();
+        let record = current.data.deliveries[id];
+
+        if(!record) throw new Error('No encontré una entrega con ese código.');
+
+        fillForm(record);
+
+        let link = buildPublicLink(record.id);
+        publicLink.value = link;
+        previewBtn.href = link;
+        outputBox.style.display = 'block';
+
+        showOk('Entrega cargada. Puedes editarla y guardar cambios.');
+      }catch(e){
+        showError(e.message || 'Error cargando entrega.');
+      }finally{
+        loadBtn.disabled = false;
+        loadBtn.textContent = 'Cargar entrega existente';
+      }
+    };
+
+    copyBtn.onclick = async function(){
+      await navigator.clipboard.writeText(publicLink.value);
+      copyBtn.textContent = 'Copiado ✅';
+      setTimeout(function(){copyBtn.textContent = 'Copiar'},1200);
+    };
+
+    whatsBtn.onclick = function(){
+      if(!publicLink.value) return;
+      let msg = 'Hola, aquí puedes ver el seguimiento estimado de tu entrega de International Items: ' + publicLink.value;
+      window.open('https://wa.me/?text=' + encodeURIComponent(msg),'_blank','noopener,noreferrer');
+    };
+
+    function statusLabel(s){
+      let map = {
+        preparando:'● Preparando',
+        ruta:'● En ruta',
+        cerca:'● Cerca del destino',
+        atrasado:'● Con atraso',
+        destino:'● Delivery ya en el destino'
+      };
+      return map[s] || '● En ruta';
+    }
+
+    function isAtDestination(record, progress){
+      return record.status === 'destino' || progress >= 100;
+    }
+
+    function calculateProgress(r){
+      if(r.status === 'destino') return 100;
+
+      if(r.manualProgress !== null && r.manualProgress !== undefined && r.manualProgress !== ''){
+        return clamp(Number(r.manualProgress) || 0,0,100);
+      }
+
+      if(r.status === 'preparando') return 0;
+
+      let start = new Date(r.startTime).getTime();
+      let end = start + (Number(r.durationMin) || 35) * 60000;
+      let now = Date.now();
+
+      if(now <= start) return 0;
+      if(now >= end) return 100;
+
+      return clamp(Math.round(((now - start) / (end - start)) * 100),0,100);
+    }
+
+    function eta(r,p){
+      if(r.status === 'destino' || p >= 100) return 'Delivery ya en el destino';
+      if(r.status === 'preparando') return 'Por iniciar';
+
+      let start = new Date(r.startTime).getTime();
+      let end = start + (Number(r.durationMin) || 35) * 60000;
+      let left = Math.max(0, Math.ceil((end - Date.now()) / 60000));
+
+      if(r.status === 'atrasado'){
+        return left > 0 ? 'Aprox. ' + (left + 10) + ' min con atraso' : 'Con atraso';
+      }
+
+      if(left <= 0) return 'Llegando pronto';
+      return 'Aprox. ' + left + ' min';
+    }
+
+    function finalNotice(){
+      return 'Mantente muy atento, el repartidor ya ha llegado contesta su llamada';
+    }
+
+    function setStepProgress(p,s){
+      steps.forEach(function(x){x.classList.remove('active')});
+
+      if(p >= 0) steps[0].classList.add('active');
+
+      if(p >= 8 || s === 'ruta' || s === 'cerca' || s === 'atrasado' || s === 'destino'){
+        steps[1].classList.add('active');
+      }
+
+      if(p >= 72 || s === 'cerca' || s === 'destino'){
+        steps[2].classList.add('active');
+      }
+
+      if(p >= 100 || s === 'destino'){
+        steps[3].classList.add('active');
+      }
+    }
+
+    function initMap(){
+      if(map) return;
+
+      map = L.map('map', {
+        zoomControl:true,
+        scrollWheelZoom:false
+      }).setView([ORIGIN_LAT,ORIGIN_LNG],13);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom:19,
+        attribution:'OpenStreetMap'
+      }).addTo(map);
+    }
+
+    function motoIcon(){
+      return L.divIcon({
+        className:'',
+        html:'<div class="motoIcon"><div class="motoPulse"></div>🛵</div>',
+        iconSize:[46,46],
+        iconAnchor:[23,23]
+      });
+    }
+
+    async function getRoute(oLat,oLng,dLat,dLng){
+      let url = 'https://router.project-osrm.org/route/v1/driving/' + oLng + ',' + oLat + ';' + dLng + ',' + dLat + '?overview=full&geometries=geojson';
+
+      try{
+        let res = await fetch(url);
+        if(!res.ok) throw new Error('Ruta no disponible');
+
+        let data = await res.json();
+        let coords = data.routes && data.routes[0] && data.routes[0].geometry && data.routes[0].geometry.coordinates;
+
+        if(!coords || !coords.length) throw new Error('Ruta vacía');
+
+        return coords.map(function(c){
+          return [c[1], c[0]];
+        });
+      }catch(e){
+        return [[oLat,oLng],[dLat,dLng]];
+      }
+    }
+
+    function pointAtProgress(route,p){
+      if(!route.length) return [ORIGIN_LAT,ORIGIN_LNG];
+      if(route.length === 1) return route[0];
+
+      let t = clamp(p,0,100) / 100;
+      let raw = t * (route.length - 1);
+      let i = Math.min(route.length - 2, Math.floor(raw));
+      let f = raw - i;
+      let a = route[i];
+      let b = route[i+1];
+
+      return [
+        a[0] + (b[0] - a[0]) * f,
+        a[1] + (b[1] - a[1]) * f
+      ];
+    }
+
+    async function drawRoute(r,p){
+      initMap();
+
+      let oLat = num(r.originLat, ORIGIN_LAT);
+      let oLng = num(r.originLng, ORIGIN_LNG);
+      let dLat = num(r.destLat, ORIGIN_LAT);
+      let dLng = num(r.destLng, ORIGIN_LNG);
+      let routeId = oLat + ',' + oLng + '-' + dLat + ',' + dLng;
+
+      if(lastRouteId !== routeId || !currentRoute.length){
+        currentRoute = await getRoute(oLat,oLng,dLat,dLng);
+        lastRouteId = routeId;
+
+        if(routeLine) map.removeLayer(routeLine);
+        if(doneLine) map.removeLayer(doneLine);
+        if(startMarker) map.removeLayer(startMarker);
+        if(endMarker) map.removeLayer(endMarker);
+
+        routeLine = L.polyline(currentRoute, {
+          color:'#2563eb',
+          weight:8,
+          opacity:.35
+        }).addTo(map);
+
+        doneLine = L.polyline([], {
+          color:'#22c55e',
+          weight:8,
+          opacity:.95
+        }).addTo(map);
+
+        startMarker = L.marker([oLat,oLng], {
+          title:'Salida'
+        }).addTo(map).bindPopup('Salida International Items');
+
+        endMarker = L.marker([dLat,dLng], {
+          title:'Destino'
+        }).addTo(map).bindPopup('Destino del cliente');
+
+        map.fitBounds(L.latLngBounds(currentRoute), {padding:[45,45]});
+      }
+
+      let doneCount = Math.max(1, Math.round((currentRoute.length - 1) * (clamp(p,0,100) / 100)));
+      let doneCoords = currentRoute.slice(0, doneCount + 1);
+      let motoPos = pointAtProgress(currentRoute,p);
+
+      doneLine.setLatLngs(doneCoords.concat([motoPos]));
+
+      if(!motoMarker){
+        motoMarker = L.marker(motoPos, {
+          icon:motoIcon(),
+          zIndexOffset:1000
+        }).addTo(map);
+      }else{
+        motoMarker.setLatLng(motoPos);
+      }
+    }
+
+    async function renderClient(r){
+      currentRecord = r;
+      let p = calculateProgress(r);
+      let atDestination = isAtDestination(r,p);
+
+      clientOrder.textContent = r.clientName || 'Entrega en ruta';
+      clientCode.textContent = 'Código de seguimiento: ' + (r.id || 'International Items');
+      originText.textContent = r.originName || ORIGIN_NAME;
+      destText.textContent = r.destination || 'Destino del cliente';
+
+      statusPill.textContent = atDestination ? '● Delivery ya en el destino' : statusLabel(r.status);
+      statusPill.className = 'pill ' + (atDestination ? 'pillYellow' : r.status === 'atrasado' ? 'pillYellow' : r.status === 'preparando' ? 'pillBlue' : '');
+
+      percentText.textContent = p + '%';
+      progressFill.style.width = p + '%';
+      etaText.textContent = eta(r,p);
+
+      updatedText.textContent = r.updatedAt
+        ? new Date(r.updatedAt).toLocaleString('es-HN',{hour:'2-digit',minute:'2-digit',day:'2-digit',month:'2-digit'})
+        : '--';
+
+      noteText.textContent = atDestination ? finalNotice() : (r.note || 'Entrega en proceso');
+
+      setStepProgress(p,r.status);
+      await drawRoute(r,p);
+
+      setTimeout(function(){
+        if(map) map.invalidateSize();
+      },250);
+    }
+
+    function renderLocalProgress(){
+      if(!currentRecord || !map) return;
+
+      let p = calculateProgress(currentRecord);
+      let atDestination = isAtDestination(currentRecord,p);
+
+      percentText.textContent = p + '%';
+      progressFill.style.width = p + '%';
+      etaText.textContent = eta(currentRecord,p);
+      statusPill.textContent = atDestination ? '● Delivery ya en el destino' : statusLabel(currentRecord.status);
+      statusPill.className = 'pill ' + (atDestination ? 'pillYellow' : currentRecord.status === 'atrasado' ? 'pillYellow' : currentRecord.status === 'preparando' ? 'pillBlue' : '');
+      noteText.textContent = atDestination ? finalNotice() : (currentRecord.note || 'Entrega en proceso');
+
+      setStepProgress(p,currentRecord.status);
+      drawRoute(currentRecord,p);
+    }
+
+    async function fetchClientRecord(id){
+      let path = DEFAULT_DATA_PATH;
+      let urls = [
+        location.origin + '/' + path + '?v=' + Date.now(),
+        './' + path + '?v=' + Date.now()
+      ];
+
+      for(let u of urls){
+        try{
+          let res = await fetch(u,{cache:'no-store'});
+          if(res.ok){
+            let data = await res.json();
+            if(data.deliveries && data.deliveries[id]) return data.deliveries[id];
+          }
+        }catch(e){}
+      }
+
+      throw new Error('Entrega no encontrada');
+    }
+
+    async function startClientMode(id){
+      adminPage.style.display = 'none';
+      clientPage.style.display = 'flex';
+
+      async function refresh(){
+        try{
+          let record = await fetchClientRecord(id);
+          await renderClient(record);
+        }catch(e){
+          initMap();
+          clientOrder.textContent = 'Seguimiento no disponible';
+          clientCode.textContent = 'Código: ' + id;
+          destText.textContent = 'No encontrado';
+          noteText.textContent = 'Este seguimiento aún no está publicado o no existe.';
+        }
+      }
+
+      await refresh();
+      setInterval(refresh,30000);
+      setInterval(renderLocalProgress,2500);
+    }
+
+    function showMissingCode(){
+      adminPage.style.display = 'none';
+      clientPage.style.display = 'flex';
+      initMap();
+      clientOrder.textContent = 'Seguimiento no disponible';
+      clientCode.textContent = 'Falta código de entrega';
+      destText.textContent = 'Solicita un enlace válido de International Items';
+      noteText.textContent = 'No se encontró un código de seguimiento en el enlace.';
+      percentText.textContent = '0%';
+      progressFill.style.width = '0%';
+      etaText.textContent = 'Sin código';
+    }
+
+    function init(){
+      loadSettings();
+
+      let params = new URLSearchParams(location.search);
+      let id = cleanCode(params.get('id'));
+
+      if(location.pathname.includes('/xadminpapuchomamado')){
+        adminPage.style.display = 'grid';
+        clientPage.style.display = 'none';
+        return;
+      }
+
+      if(id){
+        startClientMode(id);
+        return;
+      }
+
+      showMissingCode();
+    }
+
     init();
   </script>
 </body>

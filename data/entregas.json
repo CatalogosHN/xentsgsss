@@ -1,47 +1,4 @@
 {
-  "deliveries": {
-    "82KYLL": {
-      "id": "82KYLL",
-      "clientName": "Entrega en ruta",
-      "destination": "Destino del cliente",
-      "originName": "Punto de salida International Items",
-      "originReference": "https://maps.app.goo.gl/keYouYa4sRC9dAFW8?g_st=ac",
-      "startTime": "2026-05-27T23:40:00.000Z",
-      "durationMin": 1,
-      "manualProgress": null,
-      "status": "ruta",
-      "note": "Entrega en proceso",
-      "updatedAt": "2026-05-27T23:44:31.240Z"
-    },
-    "YOMERON": {
-      "id": "YOMERON",
-      "clientName": "Ronal Flores",
-      "destination": "La mundial Torocagua",
-      "originName": "Punto de salida International Items",
-      "originReference": "https://maps.app.goo.gl/keYouYa4sRC9dAFW8?g_st=ac",
-      "startTime": "2026-05-27T23:48:00.000Z",
-      "durationMin": 35,
-      "manualProgress": null,
-      "status": "ruta",
-      "note": "Entrega en proceso",
-      "updatedAt": "2026-05-27T23:48:41.260Z"
-    },
-    "YOMERON37": {
-      "id": "YOMERON37",
-      "clientName": "Guapon",
-      "destination": "Colonia Kennedy",
-      "originName": "Punto de salida International Items",
-      "originLat": 14.0430754,
-      "originLng": -87.2689159,
-      "destLat": 14.0651371,
-      "destLng": -87.2191182,
-      "startTime": "2026-05-27T23:57:00.000Z",
-      "durationMin": 5,
-      "manualProgress": null,
-      "status": "ruta",
-      "note": "Entrega en proceso",
-      "updatedAt": "2026-05-27T23:58:08.252Z"
-    }
-  },
-  "updatedAt": "2026-05-27T23:58:08.587Z"
+  "deliveries": {},
+  "updatedAt": null
 }
