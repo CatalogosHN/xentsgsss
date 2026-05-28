@@ -15,7 +15,23 @@
       "status": "ruta",
       "note": "Entrega en proceso",
       "updatedAt": "2026-05-28T00:11:07.780Z"
+    },
+    "LAURA23SD": {
+      "id": "LAURA23SD",
+      "clientName": "LAURA LAINEZ",
+      "destination": "Colonia Kennedy",
+      "originName": "Punto de salida International Items",
+      "originLat": 14.0430754,
+      "originLng": -87.2689159,
+      "destLat": 14.0523825,
+      "destLng": -87.2275701,
+      "startTime": "2026-05-28T05:23:00.000Z",
+      "durationMin": 5,
+      "manualProgress": null,
+      "status": "ruta",
+      "note": "Entrega en proceso",
+      "updatedAt": "2026-05-28T05:27:12.730Z"
     }
   },
-  "updatedAt": "2026-05-28T00:11:08.166Z"
+  "updatedAt": "2026-05-28T05:27:13.149Z"
 }
