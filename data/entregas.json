@@ -1,4 +1,21 @@
 {
-  "deliveries": {},
-  "updatedAt": null
+  "deliveries": {
+    "YOMERON": {
+      "id": "YOMERON",
+      "clientName": "Papuchon",
+      "destination": "La Mundial Toncontin",
+      "originName": "Punto de salida International Items",
+      "originLat": 14.0430754,
+      "originLng": -87.2689159,
+      "destLat": 14.0651371,
+      "destLng": -87.2191182,
+      "startTime": "2026-05-28T00:10:00.000Z",
+      "durationMin": 6,
+      "manualProgress": null,
+      "status": "ruta",
+      "note": "Entrega en proceso",
+      "updatedAt": "2026-05-28T00:11:07.780Z"
+    }
+  },
+  "updatedAt": "2026-05-28T00:11:08.166Z"
 }
