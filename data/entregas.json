@@ -31,7 +31,23 @@
       "status": "ruta",
       "note": "Entrega en proceso",
       "updatedAt": "2026-05-28T05:28:45.134Z"
+    },
+    "LAURAE27": {
+      "id": "LAURAE27",
+      "clientName": "LAURA LAINEZ",
+      "destination": "VENTU LIFE",
+      "originName": "Punto de salida International Items",
+      "originLat": 14.0430754,
+      "originLng": -87.2689159,
+      "destLat": 14.0523825,
+      "destLng": -87.2275701,
+      "startTime": "2026-05-28T05:29:00.000Z",
+      "durationMin": 5,
+      "manualProgress": null,
+      "status": "ruta",
+      "note": "Entrega en proceso",
+      "updatedAt": "2026-05-28T05:30:00.150Z"
     }
   },
-  "updatedAt": "2026-05-28T05:28:45.462Z"
+  "updatedAt": "2026-05-28T05:30:00.489Z"
 }
