@@ -47,7 +47,23 @@
       "status": "ruta",
       "note": "Entrega en proceso",
       "updatedAt": "2026-05-28T05:30:00.150Z"
+    },
+    "8E7X9L": {
+      "id": "8E7X9L",
+      "clientName": "Mayra Pineda",
+      "destination": "Residencial Quinta Isabel",
+      "originName": "Texaco Mateo",
+      "originLat": 14.0578733,
+      "originLng": -87.2573022,
+      "destLat": 14.0410538,
+      "destLng": -87.2660946,
+      "startTime": "2026-06-15T02:25:00.000Z",
+      "durationMin": 3,
+      "manualProgress": null,
+      "status": "ruta",
+      "note": "Entrega en proceso",
+      "updatedAt": "2026-06-15T02:26:38.372Z"
     }
   },
-  "updatedAt": "2026-05-28T05:30:00.489Z"
+  "updatedAt": "2026-06-15T02:26:38.761Z"
 }
