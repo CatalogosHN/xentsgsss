@@ -555,6 +555,24 @@
             <textarea id="originNameInput" placeholder="Ej: Bodega International Items, salida principal"></textarea>
           </div>
 
+          <div class="row">
+            <div>
+              <label for="originLatInput">Latitud origen</label>
+              <input id="originLatInput" type="number" step="any" placeholder="Ej: 14.0430">
+            </div>
+            <div>
+              <label for="originLngInput">Longitud origen</label>
+              <input id="originLngInput" type="number" step="any" placeholder="Ej: -87.2689">
+            </div>
+          </div>
+
+          <div>
+            <label for="originMapsLink">Link de Google Maps del origen</label>
+            <input id="originMapsLink" type="text" placeholder="Pega el enlace completo de Google Maps del punto de salida">
+          </div>
+
+          <button class="btn btn2" id="extractOriginBtn" type="button">Usar este link como origen</button>
+
           <div>
             <label for="destination">Destino visible</label>
             <textarea id="destination" placeholder="Ej: Col. Kennedy, cerca del punto indicado por el cliente"></textarea>
@@ -710,6 +728,10 @@
     const deliveryId = document.getElementById('deliveryId');
     const clientName = document.getElementById('clientName');
     const originNameInput = document.getElementById('originNameInput');
+    const originLatInput = document.getElementById('originLatInput');
+    const originLngInput = document.getElementById('originLngInput');
+    const originMapsLink = document.getElementById('originMapsLink');
+    const extractOriginBtn = document.getElementById('extractOriginBtn');
     const destination = document.getElementById('destination');
     const destLat = document.getElementById('destLat');
     const destLng = document.getElementById('destLng');
@@ -843,6 +865,19 @@
       return null;
     }
 
+    extractOriginBtn.onclick = function(){
+      clearAlerts();
+      let coords = parseCoordsFromText(originMapsLink.value);
+      if(!coords){
+        showError('No pude extraer coordenadas del origen. Si es un link corto tipo maps.app.goo.gl, ábrelo primero en Google Maps y copia el enlace completo o coloca latitud y longitud manualmente.');
+        return;
+      }
+      originLatInput.value = coords.lat;
+      originLngInput.value = coords.lng;
+      if(!originNameInput.value.trim()) originNameInput.value = 'Origen indicado por link de Google Maps';
+      showOk('Origen definido correctamente con el link de Google Maps.');
+    };
+
     extractBtn.onclick = function(){
       clearAlerts();
       let coords = parseCoordsFromText(mapsLink.value);
@@ -878,6 +913,8 @@
       trustedDevice.checked = localStorage.getItem('ii_trusted_device') === '1';
       githubToken.value = trustedDevice.checked ? (localStorage.getItem('ii_github_token') || '') : '';
       originNameInput.value = ORIGIN_NAME;
+      originLatInput.value = ORIGIN_LAT;
+      originLngInput.value = ORIGIN_LNG;
       startTime.value = nowLocalInput();
       deliveryId.value = randomCode(6);
     }
@@ -972,6 +1009,12 @@
       let manual = manualProgress.value.trim() === '' ? null : clamp(parseInt(manualProgress.value,10),0,100);
       let lat = num(destLat.value, NaN);
       let lng = num(destLng.value, NaN);
+      let oLat = num(originLatInput.value, NaN);
+      let oLng = num(originLngInput.value, NaN);
+
+      if(!Number.isFinite(oLat) || !Number.isFinite(oLng)){
+        throw new Error('Ingresa latitud y longitud del origen para dibujar ruta real.');
+      }
 
       if(!Number.isFinite(lat) || !Number.isFinite(lng)){
         throw new Error('Ingresa latitud y longitud del destino para dibujar ruta real.');
@@ -982,8 +1025,8 @@
         clientName:safeText(clientName.value.trim() || 'Entrega en ruta'),
         destination:safeText(destination.value.trim() || 'Destino del cliente'),
         originName:safeText(originNameInput.value.trim() || ORIGIN_NAME),
-        originLat:ORIGIN_LAT,
-        originLng:ORIGIN_LNG,
+        originLat:oLat,
+        originLng:oLng,
         destLat:lat,
         destLng:lng,
         startTime:startTime.value ? new Date(startTime.value).toISOString() : new Date().toISOString(),
@@ -999,6 +1042,8 @@
       deliveryId.value = r.id || '';
       clientName.value = r.clientName || '';
       originNameInput.value = r.originName || ORIGIN_NAME;
+      originLatInput.value = r.originLat || ORIGIN_LAT;
+      originLngInput.value = r.originLng || ORIGIN_LNG;
       destination.value = r.destination || '';
       destLat.value = r.destLat || '';
       destLng.value = r.destLng || '';
