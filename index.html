@@ -551,6 +551,11 @@
           </div>
 
           <div>
+            <label for="originNameInput">Dirección origen visible</label>
+            <textarea id="originNameInput" placeholder="Ej: Bodega International Items, salida principal"></textarea>
+          </div>
+
+          <div>
             <label for="destination">Destino visible</label>
             <textarea id="destination" placeholder="Ej: Col. Kennedy, cerca del punto indicado por el cliente"></textarea>
           </div>
@@ -704,6 +709,7 @@
 
     const deliveryId = document.getElementById('deliveryId');
     const clientName = document.getElementById('clientName');
+    const originNameInput = document.getElementById('originNameInput');
     const destination = document.getElementById('destination');
     const destLat = document.getElementById('destLat');
     const destLng = document.getElementById('destLng');
@@ -871,6 +877,7 @@
       githubPath.value = localStorage.getItem('ii_github_path') || DEFAULT_DATA_PATH;
       trustedDevice.checked = localStorage.getItem('ii_trusted_device') === '1';
       githubToken.value = trustedDevice.checked ? (localStorage.getItem('ii_github_token') || '') : '';
+      originNameInput.value = ORIGIN_NAME;
       startTime.value = nowLocalInput();
       deliveryId.value = randomCode(6);
     }
@@ -974,7 +981,7 @@
         id:id,
         clientName:safeText(clientName.value.trim() || 'Entrega en ruta'),
         destination:safeText(destination.value.trim() || 'Destino del cliente'),
-        originName:ORIGIN_NAME,
+        originName:safeText(originNameInput.value.trim() || ORIGIN_NAME),
         originLat:ORIGIN_LAT,
         originLng:ORIGIN_LNG,
         destLat:lat,
@@ -991,6 +998,7 @@
     function fillForm(r){
       deliveryId.value = r.id || '';
       clientName.value = r.clientName || '';
+      originNameInput.value = r.originName || ORIGIN_NAME;
       destination.value = r.destination || '';
       destLat.value = r.destLat || '';
       destLng.value = r.destLng || '';
@@ -1260,7 +1268,7 @@
 
         startMarker = L.marker([oLat,oLng], {
           title:'Salida'
-        }).addTo(map).bindPopup('Salida International Items');
+        }).addTo(map).bindPopup(r.originName || ORIGIN_NAME);
 
         endMarker = L.marker([dLat,dLng], {
           title:'Destino'
