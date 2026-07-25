@@ -63,7 +63,23 @@
       "status": "ruta",
       "note": "Entrega en proceso",
       "updatedAt": "2026-06-15T02:26:38.372Z"
+    },
+    "UC2HSP": {
+      "id": "UC2HSP",
+      "clientName": "Bersy Lopez",
+      "destination": "Pulperia brayan",
+      "originName": "Punto de salida International Items",
+      "originLat": 14.0430754,
+      "originLng": -87.2689159,
+      "destLat": 14.0934192,
+      "destLng": -87.2283228,
+      "startTime": "2026-07-25T22:12:00.000Z",
+      "durationMin": 60,
+      "manualProgress": null,
+      "status": "ruta",
+      "note": "Entrega en proceso",
+      "updatedAt": "2026-07-25T22:19:50.263Z"
     }
   },
-  "updatedAt": "2026-06-15T02:26:38.761Z"
+  "updatedAt": "2026-07-25T22:19:50.711Z"
 }
